@@ -9,12 +9,12 @@ Flutter版的玩安卓客户端，练手用(更新中。。。).
 | ![微信图片_20191011163152.jpg](http://ww1.sinaimg.cn/large/a78780c0ly1g7uduhewx9j20u01rc7iw.jpg) |  |  |
 
 ## 项目中用到的插件
-  flutter_screenutil: ^0.5.3  #屏幕适配
-  fluttertoast: ^3.1.3  #吐司
-  flutter_swiper: ^1.1.6  #轮播图效果
-  dio: ^3.0.2 #网络请求框架
-  cupertino_icons: ^0.1.2
-  flutter_easyrefresh: ^2.0.4 #下拉刷新
+  flutter_screenutil: ^0.5.3  #屏幕适配  
+  fluttertoast: ^3.1.3  #吐司  
+  flutter_swiper: ^1.1.6  #轮播图效果  
+  dio: ^3.0.2 #网络请求框架  
+  cupertino_icons: ^0.1.2  
+  flutter_easyrefresh: ^2.0.4 #下拉刷新  
   ...
   
   
