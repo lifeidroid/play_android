@@ -2,7 +2,12 @@
 
 Flutter版的玩安卓客户端，练手用.
 
-## Getting Started
+## 效果展示
+| 首页 | 首页 | 首页 |
+| ----- | ---- | ---- |
+| ![微信图片_20191011163208.jpg](http://ww1.sinaimg.cn/large/a78780c0ly1g7udptgrwfj20u01rcduh.jpg) | ![微信图片_20191011163203.jpg](http://ww1.sinaimg.cn/large/a78780c0ly1g7udravu2ij20u01rctg7.jpg) | ![微信图片_20191011163158.jpg](http://ww1.sinaimg.cn/large/a78780c0ly1g7udu95nqdj20u01rcthc.jpg) |
+| ![微信图片_20191011163152.jpg](http://ww1.sinaimg.cn/large/a78780c0ly1g7uduhewx9j20u01rc7iw.jpg) | 文本5 | 文本6 |
+
 
 This project is a starting point for a Flutter application.
 
