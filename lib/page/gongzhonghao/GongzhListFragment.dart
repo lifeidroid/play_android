@@ -7,26 +7,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:play_android/entity/home_article_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 
-import '../r.dart';
+import '../../r.dart';
 
-class ProjectListFragment extends StatefulWidget {
+class GongzhListFragment extends StatefulWidget {
   int _Id;
 
-  ProjectListFragment(this._Id);
+  GongzhListFragment(this._Id);
 
   @override
   State<StatefulWidget> createState() {
-    return ProjectListFragmentState(_Id);
+    return GongzhListFragmentState(_Id);
   }
 }
 
-class ProjectListFragmentState extends State<ProjectListFragment>
+class GongzhListFragmentState extends State<GongzhListFragment>
     with AutomaticKeepAliveClientMixin {
   int _Id;
   int currentPage = 0; //第一页
   List<HomeArticleEntity> articleList = new List();
 
-  ProjectListFragmentState(this._Id);
+  GongzhListFragmentState(this._Id);
 
   @override
   void initState() {
@@ -89,14 +89,14 @@ class ProjectListFragmentState extends State<ProjectListFragment>
                           child: new Text(
                             article.author,
                             style: new TextStyle(
-                                fontSize: ScreenUtil.getInstance().setSp(35),
+                                fontSize: ScreenUtil.getInstance().setSp(32),
                                 color: const Color(0xFF6e6e6e)),
                           ),
                         ),
                         new Text(
                           article.niceDate,
                           style: new TextStyle(
-                              fontSize: ScreenUtil.getInstance().setSp(35),
+                              fontSize: ScreenUtil.getInstance().setSp(32),
                               color: const Color(0xFF999999)),
                         )
                       ],
@@ -107,52 +107,17 @@ class ProjectListFragmentState extends State<ProjectListFragment>
                     ),
                     new Row(
                       children: <Widget>[
-                        article.envelopePic != ""
-                            ? new Container(
-                                child: new Image(
-                                    image: NetworkImage(article.envelopePic),
-                                    width:
-                                        ScreenUtil.getInstance().setWidth(330),
-                                    fit: BoxFit.fitWidth,
-                                    height:
-                                        ScreenUtil.getInstance().setWidth(220)),
-                                margin: EdgeInsets.only(
-                                    right:
-                                        ScreenUtil.getInstance().setWidth(30)),
-                              )
-                            : new Container(),
                         new Expanded(
-                          child: new Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              new Text(
-                                article.title,
-                                softWrap: false,
-                                //是否自动换行 false文字不考虑容器大小  单行显示   超出；屏幕部分将默认截断处理
-                                overflow: TextOverflow.ellipsis,
-                                //文字超出屏幕之后的处理方式  TextOverflow.clip剪裁   TextOverflow.fade 渐隐  TextOverflow.ellipsis省略号
-                                style: new TextStyle(
-                                    fontSize:
-                                        ScreenUtil.getInstance().setSp(40),
-                                    color: Color(0xFF333333)),
-                              ),
-                              new Text(
-                                article.desc,
-                                softWrap: false,
-                                maxLines: 3,
-                                textAlign: TextAlign.start,
-                                //文本对齐方式  居中
-                                //是否自动换行 false文字不考虑容器大小  单行显示   超出；屏幕部分将默认截断处理
-                                overflow: TextOverflow.ellipsis,
-                                //文字超出屏幕之后的处理方式  TextOverflow.clip剪裁   TextOverflow.fade 渐隐  TextOverflow.ellipsis省略号
-                                style: new TextStyle(
-                                    fontSize:
-                                        ScreenUtil.getInstance().setSp(35),
-                                    color: Color(0xFF999999)),
-                              ),
-                            ],
+                          child: new Text(
+                            article.title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            style: new TextStyle(
+                                fontSize: ScreenUtil.getInstance().setSp(40),
+                                color: Color(0xFF333333)),
                           ),
-                        ),
+                        )
                       ],
                     ),
                     new Divider(
@@ -164,17 +129,17 @@ class ProjectListFragmentState extends State<ProjectListFragment>
                         new Text(
                           article.superChapterName,
                           style: new TextStyle(
-                              fontSize: ScreenUtil.getInstance().setSp(35),
+                              fontSize: ScreenUtil.getInstance().setSp(32),
                               color: const Color(0xFF999999)),
                         ),
                         new Text(" • ",
                             style: new TextStyle(
-                                fontSize: ScreenUtil.getInstance().setSp(35),
+                                fontSize: ScreenUtil.getInstance().setSp(32),
                                 color: const Color(0xFF999999))),
                         new Expanded(
                           child: new Text(article.chapterName,
                               style: new TextStyle(
-                                  fontSize: ScreenUtil.getInstance().setSp(35),
+                                  fontSize: ScreenUtil.getInstance().setSp(32),
                                   color: const Color(0xFF999999))),
                         ),
                         new Image(

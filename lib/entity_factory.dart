@@ -2,8 +2,8 @@ import 'package:play_android/entity/banner_entity.dart';
 import 'package:play_android/entity/gongzh_entity.dart';
 import 'package:play_android/entity/home_article_entity.dart';
 import 'package:play_android/entity/project_entity.dart';
-import 'package:play_android/entity/system_entity_entity.dart';
-import 'package:play_android/entity/system_navi_entity_entity.dart';
+import 'package:play_android/entity/system_entity.dart';
+import 'package:play_android/entity/system_navi_entity.dart';
 import 'package:play_android/http/return_body_entity.dart';
 
 class EntityFactory {

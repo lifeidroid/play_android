@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:play_android/entity/gongzh_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
-import 'package:play_android/page/GongzhListFragment.dart';
+
+import 'GongzhListFragment.dart';
 
 class GongzhFragment extends StatefulWidget {
   @override

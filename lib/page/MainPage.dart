@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:play_android/page/ProjectFragment.dart';
+import 'package:play_android/page/project/ProjectFragment.dart';
 import 'package:play_android/r.dart';
 
-import 'GongzhFragment.dart';
-import 'HomeFragment.dart';
-import 'SystemFragment.dart';
+import 'gongzhonghao/GongzhFragment.dart';
+import 'System/SystemFragment.dart';
+import 'home/HomeFragment.dart';
+import 'my/MyFragment.dart';
 
 //主页面
 class MainPage extends StatelessWidget {
@@ -59,7 +60,7 @@ class _ApplicationPageState extends State<ApplicationPage> {
               break;
             case 4:
               {
-                return new Text("我的");
+                return new MyFragment();
               }
               break;
           }

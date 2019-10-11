@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:play_android/page/LoginForm.dart';
-import 'package:play_android/page/RegisterForm.dart';
+import 'package:play_android/page/login/LoginForm.dart';
+import 'package:play_android/page/login/RegisterForm.dart';
 import 'package:play_android/r.dart';
 
 class LoginPage extends StatelessWidget {

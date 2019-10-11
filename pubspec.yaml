@@ -91,6 +91,13 @@ flutter:
     - assets/img/ic_wechat_normal.png
     - assets/img/ic_wechat_selected.png
     - assets/img/image_holder.png
+    - assets/img/img_book.png
+    - assets/img/img_github.png
+    - assets/img/img_heart.png
+    - assets/img/img_right.png
+    - assets/img/img_setting.png
+    - assets/img/img_star.png
+    - assets/img/img_user_head.png
     - assets/img/login_bg.png
     - assets/img/logo.png
     - assets/img/pic_404.jpg

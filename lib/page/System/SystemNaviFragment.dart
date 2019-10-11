@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:play_android/entity/system_entity_entity.dart';
-import 'package:play_android/entity/system_navi_entity_entity.dart';
+import 'package:play_android/entity/system_entity.dart';
+import 'package:play_android/entity/system_navi_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 
 class SystemNaviFragment extends StatefulWidget {

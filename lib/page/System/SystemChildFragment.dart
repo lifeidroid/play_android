@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:play_android/entity/system_entity_entity.dart';
+import 'package:play_android/entity/system_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 
 class SystemChildFragment extends StatefulWidget {
@@ -22,7 +22,7 @@ class SystemChildFragmentState extends State<SystemChildFragment> with Automatic
     super.initState();
   }
 
-//  获取首页banner
+//  获取数据
   void getData() async {
     HttpRequest.get("tree/json", null, (data) {
       print(data);

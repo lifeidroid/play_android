@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:play_android/page/SystemChildFragment.dart';
-import 'package:play_android/page/SystemNaviFragment.dart';
+import 'package:play_android/page/System/SystemChildFragment.dart';
+import 'package:play_android/page/System/SystemNaviFragment.dart';
 
 class SystemFragment extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return new SystemFragmentState();
   }
 }
