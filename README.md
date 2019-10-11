@@ -1,6 +1,6 @@
 # play_android
 
-A new Flutter application.
+Flutter版的玩安卓客户端，练手用.
 
 ## Getting Started
 
