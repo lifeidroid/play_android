@@ -28,14 +28,14 @@ class SystemNaviFragmentState extends State<SystemNaviFragment>
 
 //  获取首页banner
   void getData() async {
-    HttpRequest.get("navi/json", null, (data) {
+    HttpRequest.getInstance().get("navi/json", successCallBack: (data) {
       print(data);
       List responseJson = json.decode(data);
       setState(() {
         dataList =
             responseJson.map((m) => new SystemNaviEntity.fromJson(m)).toList();
       });
-    }, (code, msg) {});
+    }, errorCallBack: (code, msg) {});
   }
 
   List<Widget> getChildren() {

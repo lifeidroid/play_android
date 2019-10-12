@@ -1,11 +1,32 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:play_android/http/HttpRequest.dart';
+import 'package:play_android/http/httpUtil.dart';
+import 'package:play_android/widget/T.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   PageController _pageController;
 
   LoginForm(this._pageController);
+
+  @override
+  State<StatefulWidget> createState() {
+    return new LoginFormState(_pageController);
+  }
+}
+
+class LoginFormState extends State<LoginForm>
+    with AutomaticKeepAliveClientMixin {
+  PageController _pageController;
+
+  LoginFormState(this._pageController);
+
+  String _name;
+  String _pwd;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +44,6 @@ class LoginForm extends StatelessWidget {
                 visible: true,
                 child: IconButton(
                   icon: Icon(Icons.arrow_right),
-                  tooltip: 'Increase volume by 10',
                   disabledColor: Color(int.parse("0x00000000")),
                   onPressed: null,
                 ),
@@ -37,7 +57,6 @@ class LoginForm extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(Icons.arrow_right),
-                tooltip: 'Increase volume by 10',
                 disabledColor: Colors.lightBlue,
                 onPressed: null,
               ),
@@ -60,6 +79,9 @@ class LoginForm extends StatelessWidget {
                     hintText: "请输入用户名",
                     fillColor: Colors.transparent,
                     prefixIcon: Icon(Icons.account_circle)),
+                onChanged: (val) {
+                  _name = val;
+                },
               ),
               new Container(
                 height: ScreenUtil.getInstance().setWidth(30),
@@ -70,6 +92,9 @@ class LoginForm extends StatelessWidget {
                     hintText: "请输入密码",
                     fillColor: Colors.transparent,
                     prefixIcon: Icon(Icons.lock_open)),
+                onChanged: (val) {
+                  _pwd = val;
+                },
               ),
               new Container(
                   width: double.infinity,
@@ -77,7 +102,16 @@ class LoginForm extends StatelessWidget {
                       top: ScreenUtil.getInstance().setWidth(85)),
                   height: ScreenUtil.getInstance().setWidth(120),
                   child: new RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (null == _name || _name.isEmpty) {
+                          T.showToast("请输入用户名");
+                          return;
+                        }
+                        if (null == _pwd || _pwd.isEmpty) {
+                          T.showToast("请输入密码");
+                        }
+                        doLogin();
+                      },
                       textColor: Colors.white,
                       child: new Text(
                         "登录",
@@ -96,4 +130,28 @@ class LoginForm extends StatelessWidget {
       ],
     );
   }
+
+  void doLogin() async {
+//    Map<String, String> params = new Map();
+//    params["username"] = _name;
+//    params["password"] = _pwd;
+//    var data = {'username': _name, 'password': _pwd};
+//    HttpRequest.post("user/login", data, (data) {
+//      print(data);
+//    }, (code, msg) {
+//      T.showToast(msg);
+//    });
+    doRequest();
+  }
+
+  Future doRequest() async {
+    var data;
+    data = {'username': _name, 'password': _pwd};
+    HttpRequest.getInstance().post("user/login",data: data,successCallBack: (data){},errorCallBack: (code,msg){
+
+    });
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }

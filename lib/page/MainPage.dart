@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:play_android/page/project/ProjectFragment.dart';
 import 'package:play_android/r.dart';
 
-import 'gongzhonghao/GongzhFragment.dart';
 import 'System/SystemFragment.dart';
+import 'gongzhonghao/GongzhFragment.dart';
 import 'home/HomeFragment.dart';
 import 'my/MyFragment.dart';
 

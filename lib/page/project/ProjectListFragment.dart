@@ -37,7 +37,8 @@ class ProjectListFragmentState extends State<ProjectListFragment>
 
   //  加载文章
   loadArticleData() async {
-    HttpRequest.get("wxarticle/list/$_Id/$currentPage/json", null, (data) {
+    HttpRequest.getInstance().get("wxarticle/list/$_Id/$currentPage/json",
+        successCallBack: (data) {
       Map<String, dynamic> dataJson = json.decode(data);
       List responseJson = json.decode(json.encode(dataJson["datas"]));
       print(responseJson.runtimeType);
@@ -46,7 +47,7 @@ class ProjectListFragmentState extends State<ProjectListFragment>
       setState(() {
         articleList.addAll(cardbeanList);
       });
-    }, (code, msg) {});
+    }, errorCallBack: (code, msg) {});
   }
 
   @override

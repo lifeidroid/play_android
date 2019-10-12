@@ -25,14 +25,14 @@ class SystemChildFragmentState extends State<SystemChildFragment>
 
 //  获取数据
   void getData() async {
-    HttpRequest.get("tree/json", null, (data) {
+    HttpRequest.getInstance().get("tree/json", successCallBack: (data) {
       print(data);
       List responseJson = json.decode(data);
       setState(() {
         dataList =
             responseJson.map((m) => new SystemEntity.fromJson(m)).toList();
       });
-    }, (code, msg) {});
+    }, errorCallBack: (code, msg) {});
   }
 
   List<Widget> getChild(SystemEntity entity) {
@@ -51,9 +51,7 @@ class SystemChildFragmentState extends State<SystemChildFragment>
       }
     } else {
       children.add(new GestureDetector(
-        onTap: () => {
-          print(entity.name)
-        },
+        onTap: () => {print(entity.name)},
         child: new Container(
             padding: EdgeInsets.fromLTRB(
                 ScreenUtil.getInstance().setWidth(42),

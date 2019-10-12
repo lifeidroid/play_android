@@ -47,18 +47,19 @@ class MovieListState extends State<MovieList>
 
 //  加载置顶文章
   loadTopData() async {
-    HttpRequest.get("article/top/json", null, (data) {
+    HttpRequest.getInstance().get("article/top/json", successCallBack: (data) {
       List responseJson = json.decode(data);
       List<HomeArticleEntity> cardbeanList =
           responseJson.map((m) => new HomeArticleEntity.fromJson(m)).toList();
       articleList.addAll(cardbeanList);
       loadArticleData();
-    }, (code, msg) {});
+    }, errorCallBack: (code, msg) {});
   }
 
 //  加载文章
   loadArticleData() async {
-    HttpRequest.get("article/list/$currentPage/json", null, (data) {
+    HttpRequest.getInstance().get("article/list/$currentPage/json",
+        successCallBack: (data) {
       Map<String, dynamic> dataJson = json.decode(data);
       List responseJson = json.decode(json.encode(dataJson["datas"]));
       print(responseJson.runtimeType);
@@ -67,12 +68,12 @@ class MovieListState extends State<MovieList>
       setState(() {
         articleList.addAll(cardbeanList);
       });
-    }, (code, msg) {});
+    }, errorCallBack: (code, msg) {});
   }
 
 //  获取首页banner
   void getBanner() async {
-    HttpRequest.post("banner/json", null, (data) {
+    HttpRequest.getInstance().post("banner/json", successCallBack: (data) {
       print(data);
       List responseJson = json.decode(data);
       List<BannerEntity> cardbeanList =
@@ -82,7 +83,7 @@ class MovieListState extends State<MovieList>
         bannerList.clear();
         bannerList.addAll(cardbeanList);
       });
-    }, (code, msg) {});
+    }, errorCallBack: (code, msg) {});
   }
 
   @override

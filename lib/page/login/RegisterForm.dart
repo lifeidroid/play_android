@@ -2,11 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class RegisterForm extends StatelessWidget {
+//注册页面
+class RegisterForm extends StatefulWidget {
   PageController _pageController;
 
-
   RegisterForm(this._pageController);
+
+  @override
+  State<StatefulWidget> createState() {
+    return RegisterFormState(_pageController);
+  }
+}
+
+class RegisterFormState extends State<RegisterForm>
+    with AutomaticKeepAliveClientMixin {
+  PageController _pageController;
+
+  RegisterFormState(this._pageController);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +57,7 @@ class RegisterForm extends StatelessWidget {
               ),
             ],
           ),
-          onTap: (){
+          onTap: () {
             _pageController.animateToPage(0,
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.ease);
@@ -108,4 +120,7 @@ class RegisterForm extends StatelessWidget {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

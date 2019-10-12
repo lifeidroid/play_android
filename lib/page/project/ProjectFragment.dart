@@ -24,7 +24,7 @@ class ProjectFragmentState extends State<ProjectFragment>
 
   //  获取首页banner
   void getData() async {
-    HttpRequest.get("project/tree/json", null, (data) {
+    HttpRequest.getInstance().get("project/tree/json", successCallBack: (data) {
       List responseJson = json.decode(data);
       setState(() {
         datas = responseJson.map((m) => new ProjectEntity.fromJson(m)).toList();
@@ -32,12 +32,13 @@ class ProjectFragmentState extends State<ProjectFragment>
         mTabController =
             TabController(initialIndex: 0, length: datas.length, vsync: this);
         mTabController.addListener(() {
-          if (mTabController.indexIsChanging) {//判断TabBar是否切换
+          if (mTabController.indexIsChanging) {
+            //判断TabBar是否切换
             onPageChange(mTabController.index, p: mPageController);
           }
         });
       });
-    }, (code, msg) {});
+    }, errorCallBack: (code, msg) {});
   }
 
   List<Tab> getTabs() {
@@ -57,12 +58,15 @@ class ProjectFragmentState extends State<ProjectFragment>
   }
 
   onPageChange(int index, {PageController p, TabController t}) async {
-    if (p != null) {//判断是哪一个切换
+    if (p != null) {
+      //判断是哪一个切换
       isPageCanChanged = false;
-      await mPageController.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.ease);//等待pageview切换完毕,再释放pageivew监听
+      await mPageController.animateToPage(index,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.ease); //等待pageview切换完毕,再释放pageivew监听
       isPageCanChanged = true;
     } else {
-      mTabController.animateTo(index);//切换Tabbar
+      mTabController.animateTo(index); //切换Tabbar
     }
   }
 
@@ -71,30 +75,32 @@ class ProjectFragmentState extends State<ProjectFragment>
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: datas.length == 0? Text("加载中.."):
-        TabBar(
-          controller: mTabController,
-          //可以和TabBarView使用同一个TabController
-          tabs: getTabs(),
-          isScrollable: true,
-          indicatorColor: Colors.transparent,
-          indicatorWeight: 1,
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicatorPadding: EdgeInsets.only(bottom: 10.0),
-          labelPadding: EdgeInsets.only(left: 20),
-          labelColor: Colors.white,
-          labelStyle: TextStyle(
-            fontSize: ScreenUtil.getInstance().setSp(45),
-          ),
-          unselectedLabelColor: Color(0x90ffffff),
-          unselectedLabelStyle: TextStyle(
-            fontSize: ScreenUtil.getInstance().setSp(45),
-          ),
-        ),
+        title: datas.length == 0
+            ? Text("加载中..")
+            : TabBar(
+                controller: mTabController,
+                //可以和TabBarView使用同一个TabController
+                tabs: getTabs(),
+                isScrollable: true,
+                indicatorColor: Colors.transparent,
+                indicatorWeight: 1,
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicatorPadding: EdgeInsets.only(bottom: 10.0),
+                labelPadding: EdgeInsets.only(left: 20),
+                labelColor: Colors.white,
+                labelStyle: TextStyle(
+                  fontSize: ScreenUtil.getInstance().setSp(45),
+                ),
+                unselectedLabelColor: Color(0x90ffffff),
+                unselectedLabelStyle: TextStyle(
+                  fontSize: ScreenUtil.getInstance().setSp(45),
+                ),
+              ),
       ),
       body: new PageView.builder(
         onPageChanged: (index) {
-          if (isPageCanChanged) {//由于pageview切换是会回调这个方法,又会触发切换tabbar的操作,所以定义一个flag,控制pageview的回调
+          if (isPageCanChanged) {
+            //由于pageview切换是会回调这个方法,又会触发切换tabbar的操作,所以定义一个flag,控制pageview的回调
             onPageChange(index);
           }
         },
