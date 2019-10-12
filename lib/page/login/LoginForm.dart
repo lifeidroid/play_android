@@ -3,41 +3,51 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginForm extends StatelessWidget {
+  PageController _pageController;
+
+  LoginForm(this._pageController);
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         new Container(
           height: ScreenUtil.getInstance().setHeight(110),
         ),
-        new Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Visibility(
-              visible: true,
-              child: IconButton(
+        new GestureDetector(
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Visibility(
+                visible: true,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_right),
+                  tooltip: 'Increase volume by 10',
+                  disabledColor: Color(int.parse("0x00000000")),
+                  onPressed: null,
+                ),
+              ),
+              new Text(
+                "去注册",
+                style: TextStyle(
+                    color: Colors.lightBlue,
+                    fontSize: ScreenUtil.getInstance().setSp(40),
+                    decoration: TextDecoration.none),
+              ),
+              IconButton(
                 icon: Icon(Icons.arrow_right),
                 tooltip: 'Increase volume by 10',
-                disabledColor: Color(int.parse("0x00000000")),
+                disabledColor: Colors.lightBlue,
                 onPressed: null,
               ),
-            ),
-            new Text(
-              "去注册",
-              style: TextStyle(
-                  color: Colors.lightBlue,
-                  fontSize: ScreenUtil.getInstance().setSp(40),
-                  decoration: TextDecoration.none),
-            ),
-            IconButton(
-              icon: Icon(Icons.arrow_right),
-              tooltip: 'Increase volume by 10',
-              disabledColor: Colors.lightBlue,
-              onPressed: null,
-            ),
-          ],
+            ],
+          ),
+          onTap: () {
+            _pageController.animateToPage(1,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.ease);
+          },
         ),
         new Container(
           margin: EdgeInsets.only(top: ScreenUtil.getInstance().setWidth(110)),

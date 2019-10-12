@@ -6,15 +6,8 @@ import 'package:play_android/page/login/RegisterForm.dart';
 import 'package:play_android/r.dart';
 
 class LoginPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new PageContent(),
-    );
-  }
-}
+  var _pageController = new PageController(initialPage: 0);
 
-class PageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -36,14 +29,20 @@ class PageContent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   new Container(
-                      width: ScreenUtil.getInstance().setWidth(1080),
-                      alignment: Alignment.centerLeft,
-                      height: ScreenUtil.getInstance().setWidth(122),
-                      padding:
-                          EdgeInsets.all(ScreenUtil.getInstance().setWidth(30)),
+                    width: ScreenUtil.getInstance().setWidth(1080),
+                    alignment: Alignment.centerLeft,
+                    height: ScreenUtil.getInstance().setWidth(122),
+                    padding:
+                        EdgeInsets.all(ScreenUtil.getInstance().setWidth(30)),
+                    child: new GestureDetector(
                       child: new Image(
                         image: AssetImage(R.assetsImgIcClose),
-                      )),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
                   new Image(
                     image: AssetImage(R.assetsImgLogo),
                     width: ScreenUtil.getInstance().setWidth(270),
@@ -74,9 +73,10 @@ class PageContent extends StatelessWidget {
           new Expanded(
             child: new PageView.builder(
               itemBuilder: (BuildContext context, int index) {
-                return index == 0 ? new LoginForm() : new RegisterForm();
+                return index == 0 ? new LoginForm(_pageController) : new RegisterForm(_pageController);
               },
               itemCount: 2,
+              controller: _pageController,
             ),
             flex: 1185,
           )

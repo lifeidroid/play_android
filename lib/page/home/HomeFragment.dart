@@ -9,6 +9,8 @@ import 'package:play_android/entity/home_article_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 import 'package:play_android/r.dart';
 
+import '../BrowserPage.dart';
+
 class HomeFragment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -116,7 +118,7 @@ class MovieListState extends State<MovieList>
             if (index == 0) {
               return Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 200.0,
+                  height: ScreenUtil.getInstance().setWidth(600),
                   child: Swiper(
                     itemBuilder: _swiperBuilder,
                     itemCount: bannerList.length,
@@ -177,7 +179,14 @@ class MovieListState extends State<MovieList>
     return new Container(
         color: Colors.white,
         child: new InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
+              return new Browser(
+                url: article.link,
+                title: article.title,
+              );
+            }));
+          },
           child: new Column(
             children: <Widget>[
               new Container(
@@ -281,12 +290,17 @@ class MovieListState extends State<MovieList>
                                   fontSize: ScreenUtil.getInstance().setSp(32),
                                   color: const Color(0xFF999999))),
                         ),
-                        new Image(
-                          image: article.zan == 0
-                              ? AssetImage(R.assetsImgZan0)
-                              : AssetImage(R.assetsImgZan1),
-                          width: ScreenUtil.getInstance().setWidth(66),
-                          height: ScreenUtil.getInstance().setWidth(66),
+                        new GestureDetector(
+                          onTap: () => {
+                            print("点击心$index"),
+                          },
+                          child: new Image(
+                            image: article.zan == 0
+                                ? AssetImage(R.assetsImgZan0)
+                                : AssetImage(R.assetsImgZan1),
+                            width: ScreenUtil.getInstance().setWidth(66),
+                            height: ScreenUtil.getInstance().setWidth(66),
+                          ),
                         )
                       ],
                     )

@@ -7,6 +7,8 @@ import 'package:play_android/entity/system_entity.dart';
 import 'package:play_android/entity/system_navi_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 
+import '../BrowserPage.dart';
+
 class SystemNaviFragment extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -14,7 +16,8 @@ class SystemNaviFragment extends StatefulWidget {
   }
 }
 
-class SystemNaviFragmentState extends State<SystemNaviFragment> with AutomaticKeepAliveClientMixin{
+class SystemNaviFragmentState extends State<SystemNaviFragment>
+    with AutomaticKeepAliveClientMixin {
   List<SystemNaviEntity> dataList = [];
 
   @override
@@ -47,26 +50,36 @@ class SystemNaviFragmentState extends State<SystemNaviFragment> with AutomaticKe
         ],
       ));
       for (int j = 0; j < dataList[i].articles.length; j++) {
-        children.add(new Container(
-            padding: EdgeInsets.fromLTRB(
-                ScreenUtil.getInstance().setWidth(42),
-                ScreenUtil.getInstance().setWidth(25),
-                ScreenUtil.getInstance().setWidth(42),
-                ScreenUtil.getInstance().setWidth(25)),
-            decoration: new BoxDecoration(
-              border: new Border.all(color: Colors.transparent, width: 1),
-              // 边色与边宽度
-              color: Color(0xFFf5f5f5),
-              borderRadius: new BorderRadius.circular(
-                  (ScreenUtil.getInstance().setWidth(50))), // 圆角度
-            ),
-            child: new Text(
-              dataList[i].articles[j].title,
-              textAlign: TextAlign.center,
-              style: new TextStyle(
-                  fontSize: ScreenUtil.getInstance().setSp(40),
-                  color: const Color(0xFF999999)),
-            )));
+        children.add(new GestureDetector(
+          onTap: () => {
+            Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
+              return new Browser(
+                url: dataList[i].articles[j].link,
+                title: dataList[i].articles[j].title,
+              );
+            }))
+          },
+          child: new Container(
+              padding: EdgeInsets.fromLTRB(
+                  ScreenUtil.getInstance().setWidth(42),
+                  ScreenUtil.getInstance().setWidth(25),
+                  ScreenUtil.getInstance().setWidth(42),
+                  ScreenUtil.getInstance().setWidth(25)),
+              decoration: new BoxDecoration(
+                border: new Border.all(color: Colors.transparent, width: 1),
+                // 边色与边宽度
+                color: Color(0xFFf5f5f5),
+                borderRadius: new BorderRadius.circular(
+                    (ScreenUtil.getInstance().setWidth(50))), // 圆角度
+              ),
+              child: new Text(
+                dataList[i].articles[j].title,
+                textAlign: TextAlign.center,
+                style: new TextStyle(
+                    fontSize: ScreenUtil.getInstance().setSp(40),
+                    color: const Color(0xFF999999)),
+              )),
+        ));
       }
     }
     return children;
@@ -76,7 +89,7 @@ class SystemNaviFragmentState extends State<SystemNaviFragment> with AutomaticKe
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: EdgeInsets.all(ScreenUtil.getInstance().setWidth(45)),
-      child:Wrap(
+      child: Wrap(
         /**
          * 这里区分一下主轴和纵轴的概念：
          * 当水平方向的时候，其主轴就是水平，纵轴就是垂直。

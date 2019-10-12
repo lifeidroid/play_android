@@ -8,6 +8,7 @@ import 'package:play_android/entity/home_article_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 
 import '../../r.dart';
+import '../BrowserPage.dart';
 
 class GongzhListFragment extends StatefulWidget {
   int _Id;
@@ -76,7 +77,14 @@ class GongzhListFragmentState extends State<GongzhListFragment>
     return new Container(
         color: Colors.white,
         child: new InkWell(
-          onTap: () {},
+          onTap: () => {
+            Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
+              return new Browser(
+                url: article.link,
+                title: article.title,
+              );
+            }))
+          },
           child: new Column(
             children: <Widget>[
               new Container(

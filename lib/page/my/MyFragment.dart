@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:play_android/page/login/LoginPage.dart';
 import 'package:play_android/r.dart';
 
 class MyFragment extends StatefulWidget {
@@ -11,6 +12,18 @@ class MyFragment extends StatefulWidget {
 }
 
 class MyFragmentState extends State<MyFragment> {
+  void goLogin() {
+    Navigator.of(context).push(
+      new MaterialPageRoute(
+        builder: (context) {
+          return new Scaffold(
+            body: new LoginPage(),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Column(
@@ -18,12 +31,17 @@ class MyFragmentState extends State<MyFragment> {
         new Container(
           child: new Column(
             children: <Widget>[
-              new ClipOval(
-                child: new Image(
-                  image: AssetImage(R.assetsImgImgUserHead),
-                  width: ScreenUtil.getInstance().setWidth(220),
-                  height: ScreenUtil.getInstance().setWidth(220),
+              new GestureDetector(
+                child: new ClipOval(
+                  child: new Image(
+                    image: AssetImage(R.assetsImgImgUserHead),
+                    width: ScreenUtil.getInstance().setWidth(220),
+                    height: ScreenUtil.getInstance().setWidth(220),
+                  ),
                 ),
+                onTap: () {
+                  goLogin();
+                },
               ),
               new Container(
                 height: ScreenUtil.getInstance().setWidth(30),

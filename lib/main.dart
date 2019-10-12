@@ -10,7 +10,6 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
       home: SplashView(),
     );
@@ -28,14 +27,19 @@ class SplashView extends StatefulWidget{
 class SplashViewState extends State<SplashView> {
   void countdown() {
     Timer timer = new Timer(new Duration(seconds: 3), () {
-      Navigator.of(context).push(
-        new MaterialPageRoute(
-          builder: (context) {
-            return new Scaffold(
-              body: new MainPage(),
-            );
-          },
-        ),
+//      Navigator.of(context).push(
+//        new MaterialPageRoute(
+//          builder: (context) {
+//            return new Scaffold(
+//              body: new MainPage(),
+//            );
+//          },
+//        ),
+//      );
+      Navigator.pushAndRemoveUntil(
+        context,
+        new MaterialPageRoute(builder: (context) => new MainPage()),
+            (route) => route == null,
       );
     });
   }
