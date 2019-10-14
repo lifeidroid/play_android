@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:play_android/Api.dart';
+import 'package:play_android/Config.dart';
 import 'package:play_android/page/MainPage.dart';
 import 'package:play_android/r.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,12 +37,12 @@ class SplashViewState extends State<SplashView> {
   //获取本地用户信息
   getUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String info = prefs.getString("userInfo");
+    String info = prefs.getString(Config.SP_USER_INFO);
     if (null != info && info.isNotEmpty) {
       Map userMap = json.decode(info);
       LoginEntity userEntity = new LoginEntity.fromJson(userMap);
       String _name = userEntity.username;
-      String _pwd = prefs.getString("pwd");
+      String _pwd = prefs.getString(Config.SP_PWD);
       if (null != _pwd && _pwd.isNotEmpty) {
         doLogin(_name, _pwd);
       }
@@ -49,10 +51,9 @@ class SplashViewState extends State<SplashView> {
 
 //  登录
   doLogin(String _name, String _pwd) {
-    print("执行登录");
     var data;
     data = {'username': _name, 'password': _pwd};
-    HttpRequest.getInstance().post("user/login", data: data,
+    HttpRequest.getInstance().post(Api.LOGIN, data: data,
         successCallBack: (data) {
       saveInfo(data);
       Navigator.of(context).pop();
@@ -61,8 +62,10 @@ class SplashViewState extends State<SplashView> {
 
 //  保存用户信息
   void saveInfo(data) async {
+    Map userMap = json.decode(data);
+    LoginEntity entity = new LoginEntity.fromJson(userMap);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString("userInfo", data);
+    await prefs.setString(Config.SP_USER_INFO, data);
   }
 
   void countdown() {

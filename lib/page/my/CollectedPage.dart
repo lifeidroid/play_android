@@ -4,31 +4,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:play_android/entity/home_article_entity.dart';
+import 'package:play_android/entity/collect_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 
 import '../../Api.dart';
 import '../../r.dart';
 import '../BrowserPage.dart';
 
-class GongzhListFragment extends StatefulWidget {
-  int _Id;
-
-  GongzhListFragment(this._Id);
-
+//收藏列表
+class CollectedPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return GongzhListFragmentState(_Id);
+    return CollectedPageState();
   }
 }
 
-class GongzhListFragmentState extends State<GongzhListFragment>
-    with AutomaticKeepAliveClientMixin {
-  int _Id;
+class CollectedPageState extends State<CollectedPage> {
   int currentPage = 0; //第一页
-  List<HomeArticleEntity> articleList = new List();
-
-  GongzhListFragmentState(this._Id);
+  List<CollectEntity> articleList = new List();
 
   @override
   void initState() {
@@ -38,13 +31,12 @@ class GongzhListFragmentState extends State<GongzhListFragment>
 
   //  加载文章
   loadArticleData() async {
-    HttpRequest.getInstance().get("wxarticle/list/$_Id/$currentPage/json",
+    HttpRequest.getInstance().get("${Api.COLLECT_LIST}$currentPage/json",
         successCallBack: (data) {
       Map<String, dynamic> dataJson = json.decode(data);
       List responseJson = json.decode(json.encode(dataJson["datas"]));
-      print(responseJson.runtimeType);
-      List<HomeArticleEntity> cardbeanList =
-          responseJson.map((m) => new HomeArticleEntity.fromJson(m)).toList();
+      List<CollectEntity> cardbeanList =
+          responseJson.map((m) => new CollectEntity.fromJson(m)).toList();
       setState(() {
         articleList.addAll(cardbeanList);
       });
@@ -53,23 +45,32 @@ class GongzhListFragmentState extends State<GongzhListFragment>
 
   @override
   Widget build(BuildContext context) {
-    return EasyRefresh(
-      child: ListView.builder(
-          itemCount: articleList.length,
-          itemBuilder: (context, index) {
-            return renderRow(index, context);
-          }),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "我的收藏",
+          style: TextStyle(fontSize: ScreenUtil.getInstance().setSp(45)),
+        ),
+        centerTitle: true,
+      ),
+      body: EasyRefresh(
+        child: ListView.builder(
+            itemCount: articleList.length,
+            itemBuilder: (context, index) {
+              return renderRow(index, context);
+            }),
 //      header: MaterialHeader(),
 //      footer: MaterialFooter(),
-      onRefresh: () async {
-        articleList.clear();
-        currentPage = 0;
-        loadArticleData();
-      },
-      onLoad: () async {
-        currentPage++;
-        loadArticleData();
-      },
+        onRefresh: () async {
+          articleList.clear();
+          currentPage = 0;
+          loadArticleData();
+        },
+        onLoad: () async {
+          currentPage++;
+          loadArticleData();
+        },
+      ),
     );
   }
 
@@ -79,13 +80,13 @@ class GongzhListFragmentState extends State<GongzhListFragment>
     return new Container(
         color: Colors.white,
         child: new InkWell(
-          onTap: () => {
+          onTap: () {
             Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
               return new Browser(
                 url: article.link,
                 title: article.title,
               );
-            }))
+            }));
           },
           child: new Column(
             children: <Widget>[
@@ -96,13 +97,12 @@ class GongzhListFragmentState extends State<GongzhListFragment>
                     new Row(
                       children: <Widget>[
                         new Expanded(
-                          child: new Text(
-                            article.author,
-                            style: new TextStyle(
-                                fontSize: ScreenUtil.getInstance().setSp(32),
-                                color: const Color(0xFF6e6e6e)),
-                          ),
-                        ),
+                            child: new Text(
+                          article.author,
+                          style: new TextStyle(
+                              fontSize: ScreenUtil.getInstance().setSp(32),
+                              color: const Color(0xFF6e6e6e)),
+                        )),
                         new Text(
                           article.niceDate,
                           style: new TextStyle(
@@ -117,17 +117,32 @@ class GongzhListFragmentState extends State<GongzhListFragment>
                     ),
                     new Row(
                       children: <Widget>[
+                        article.envelopePic != ""
+                            ? new Container(
+                                child: new Image(
+                                    image: NetworkImage(article.envelopePic),
+                                    width:
+                                        ScreenUtil.getInstance().setWidth(330),
+                                    fit: BoxFit.fitWidth,
+                                    height:
+                                        ScreenUtil.getInstance().setWidth(220)),
+                                margin: EdgeInsets.only(
+                                    right:
+                                        ScreenUtil.getInstance().setWidth(30)),
+                              )
+                            : new Container(),
                         new Expanded(
                           child: new Text(
                             article.title,
                             maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
                             softWrap: false,
+                            //是否自动换行 false文字不考虑容器大小  单行显示   超出；屏幕部分将默认截断处理
+                            overflow: TextOverflow.ellipsis,
                             style: new TextStyle(
                                 fontSize: ScreenUtil.getInstance().setSp(40),
                                 color: Color(0xFF333333)),
                           ),
-                        )
+                        ),
                       ],
                     ),
                     new Divider(
@@ -136,16 +151,6 @@ class GongzhListFragmentState extends State<GongzhListFragment>
                     ),
                     new Row(
                       children: <Widget>[
-                        new Text(
-                          article.superChapterName,
-                          style: new TextStyle(
-                              fontSize: ScreenUtil.getInstance().setSp(32),
-                              color: const Color(0xFF999999)),
-                        ),
-                        new Text(" • ",
-                            style: new TextStyle(
-                                fontSize: ScreenUtil.getInstance().setSp(32),
-                                color: const Color(0xFF999999))),
                         new Expanded(
                           child: new Text(article.chapterName,
                               style: new TextStyle(
@@ -155,19 +160,15 @@ class GongzhListFragmentState extends State<GongzhListFragment>
                         new GestureDetector(
                           onTap: () => {
                             HttpRequest.getInstance().post(
-                                article.collect == false
-                                    ? "${Api.COLLECT}${article.id}/json"
-                                    : "${Api.UN_COLLECT_ORIGIN_ID}${article.id}/json",
+                                "${Api.UN_COLLECT_ORIGIN_ID}${article.originId}/json",
                                 successCallBack: (data) {
                               setState(() {
-                                article.collect = !article.collect;
+                                articleList.removeAt(index);
                               });
                             }, errorCallBack: (code, msg) {})
                           },
                           child: new Image(
-                            image: article.collect == false
-                                ? AssetImage(R.assetsImgZan0)
-                                : AssetImage(R.assetsImgZan1),
+                            image: AssetImage(R.assetsImgZan1),
                             width: ScreenUtil.getInstance().setWidth(66),
                             height: ScreenUtil.getInstance().setWidth(66),
                           ),
@@ -183,7 +184,4 @@ class GongzhListFragmentState extends State<GongzhListFragment>
           ),
         ));
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

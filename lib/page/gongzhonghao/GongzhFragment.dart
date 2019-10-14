@@ -15,7 +15,7 @@ class GongzhFragment extends StatefulWidget {
 }
 
 class GongzhFragmentState extends State<GongzhFragment>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin{
   TabController mTabController;
   List<GongzhEntity> datas = [];
   int index = 0;

@@ -1,65 +1,44 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:play_android/Api.dart';
-import 'package:play_android/entity/banner_entity.dart';
 import 'package:play_android/entity/home_article_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
-import 'package:play_android/r.dart';
 
+import '../../Api.dart';
+import '../../r.dart';
 import '../BrowserPage.dart';
 
-class HomeFragment extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('首页'),
-        centerTitle: true,
-      ),
-      body: new MovieList(),
-    );
-  }
-}
+class SystemListFragment extends StatefulWidget {
+  int _Id;
 
-class MovieList extends StatefulWidget {
-  //构造器传递数据（并且接收上个页面传递的数据）
-  MovieList({Key key}) : super(key: key);
-
-  //滚动Banner图
-  List<BannerEntity> bannerList = [];
-  SwiperController _swiperController;
+  SystemListFragment(this._Id);
 
   @override
   State<StatefulWidget> createState() {
-    return new MovieListState();
+    return SystemListFragmentState(_Id);
   }
 }
 
-class MovieListState extends State<MovieList>
+class SystemListFragmentState extends State<SystemListFragment>
     with AutomaticKeepAliveClientMixin {
-  List<HomeArticleEntity> articleList = new List();
+  int _Id;
   int currentPage = 0; //第一页
-  SwiperController _swiperController;
-  List<BannerEntity> bannerList = [];
+  List<HomeArticleEntity> articleList = new List();
 
-//  加载置顶文章
-  loadTopData() async {
-    HttpRequest.getInstance().get("article/top/json", successCallBack: (data) {
-      List responseJson = json.decode(data);
-      List<HomeArticleEntity> cardbeanList =
-          responseJson.map((m) => new HomeArticleEntity.fromJson(m)).toList();
-      articleList.addAll(cardbeanList);
-      loadArticleData();
-    }, errorCallBack: (code, msg) {});
+  SystemListFragmentState(this._Id);
+
+  @override
+  void initState() {
+    super.initState();
+    loadArticleData();
   }
 
-//  加载文章
+  //  加载文章
   loadArticleData() async {
-    HttpRequest.getInstance().get("article/list/$currentPage/json",
+    HttpRequest.getInstance().get("wxarticle/list/$_Id/$currentPage/json",
         successCallBack: (data) {
       Map<String, dynamic> dataJson = json.decode(data);
       List responseJson = json.decode(json.encode(dataJson["datas"]));
@@ -72,87 +51,20 @@ class MovieListState extends State<MovieList>
     }, errorCallBack: (code, msg) {});
   }
 
-//  获取首页banner
-  void getBanner() async {
-    HttpRequest.getInstance().post("banner/json", successCallBack: (data) {
-      print(data);
-      List responseJson = json.decode(data);
-      List<BannerEntity> cardbeanList =
-          responseJson.map((m) => new BannerEntity.fromJson(m)).toList();
-      setState(() {
-        bannerList.clear();
-        bannerList.addAll(cardbeanList);
-      });
-    }, errorCallBack: (code, msg) {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getBanner();
-    _swiperController = new SwiperController();
-    _swiperController.startAutoplay();
-    //加载第一页数据
-    loadTopData();
-  }
-
-  @override
-  void dispose() {
-    _swiperController.stopAutoplay();
-    _swiperController.dispose();
-    super.dispose();
-  }
-
-  Widget _swiperBuilder(BuildContext context, int index) {
-    return (Image.network(
-      bannerList[index].imagePath,
-      fit: BoxFit.fill,
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return EasyRefresh(
       child: ListView.builder(
           itemCount: articleList.length,
           itemBuilder: (context, index) {
-            if (index == 0) {
-              return Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: ScreenUtil.getInstance().setWidth(600),
-                  child: Swiper(
-                    itemBuilder: _swiperBuilder,
-                    itemCount: bannerList.length,
-                    loop: false,
-                    autoplay: false,
-                    controller: _swiperController,
-                    pagination: new SwiperPagination(
-                        builder: DotSwiperPaginationBuilder(
-                      color: Colors.black54,
-                      activeColor: Colors.white,
-                    )),
-                    control: new SwiperControl(),
-                    scrollDirection: Axis.horizontal,
-                    onTap: (index) => {
-                      Navigator.of(context)
-                          .push(new MaterialPageRoute(builder: (_) {
-                        return new Browser(
-                          url: articleList[index].link,
-                          title: articleList[index].title,
-                        );
-                      }))
-                    },
-                  ));
-            } else {
-              return renderRow(index - 1, context);
-            }
+            return renderRow(index, context);
           }),
 //      header: MaterialHeader(),
 //      footer: MaterialFooter(),
       onRefresh: () async {
         articleList.clear();
         currentPage = 0;
-        loadTopData();
+        loadArticleData();
       },
       onLoad: () async {
         currentPage++;
@@ -204,23 +116,14 @@ class MovieListState extends State<MovieList>
                   children: <Widget>[
                     new Row(
                       children: <Widget>[
-                        article.type == 1
-                            ? new Text(
-                                "置顶•",
-                                style: new TextStyle(
-                                    fontSize:
-                                        ScreenUtil.getInstance().setSp(32),
-                                    color: const Color(0xFFf86734)),
-                              )
-                            : new Container(),
                         article.fresh == true
                             ? new Text(
-                                "新•",
-                                style: new TextStyle(
-                                    fontSize:
-                                        ScreenUtil.getInstance().setSp(32),
-                                    color: const Color(0xFF4282f4)),
-                              )
+                          "新•",
+                          style: new TextStyle(
+                              fontSize:
+                              ScreenUtil.getInstance().setSp(32),
+                              color: const Color(0xFF4282f4)),
+                        )
                             : new Container(),
                         new Text(
                           article.author,
@@ -232,9 +135,9 @@ class MovieListState extends State<MovieList>
                             child: article.tags.length == 0
                                 ? new Container()
                                 : new Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: getTags(article),
-                                  )),
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: getTags(article),
+                            )),
                         new Text(
                           article.niceDate,
                           style: new TextStyle(
@@ -251,17 +154,17 @@ class MovieListState extends State<MovieList>
                       children: <Widget>[
                         article.envelopePic != ""
                             ? new Container(
-                                child: new Image(
-                                    image: NetworkImage(article.envelopePic),
-                                    width:
-                                        ScreenUtil.getInstance().setWidth(330),
-                                    fit: BoxFit.fitWidth,
-                                    height:
-                                        ScreenUtil.getInstance().setWidth(220)),
-                                margin: EdgeInsets.only(
-                                    right:
-                                        ScreenUtil.getInstance().setWidth(30)),
-                              )
+                          child: new Image(
+                              image: NetworkImage(article.envelopePic),
+                              width:
+                              ScreenUtil.getInstance().setWidth(330),
+                              fit: BoxFit.fitWidth,
+                              height:
+                              ScreenUtil.getInstance().setWidth(220)),
+                          margin: EdgeInsets.only(
+                              right:
+                              ScreenUtil.getInstance().setWidth(30)),
+                        )
                             : new Container(),
                         new Expanded(
                           child: new Text(
@@ -306,10 +209,10 @@ class MovieListState extends State<MovieList>
                                     ? "${Api.COLLECT}${article.id}/json"
                                     : "${Api.UN_COLLECT_ORIGIN_ID}${article.id}/json",
                                 successCallBack: (data) {
-                              setState(() {
-                                article.collect = !article.collect;
-                              });
-                            }, errorCallBack: (code, msg) {})
+                                  setState(() {
+                                    article.collect = !article.collect;
+                                  });
+                                }, errorCallBack: (code, msg) {})
                           },
                           child: new Image(
                             image: article.collect == false

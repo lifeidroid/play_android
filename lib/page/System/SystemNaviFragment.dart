@@ -29,7 +29,6 @@ class SystemNaviFragmentState extends State<SystemNaviFragment>
 //  获取首页banner
   void getData() async {
     HttpRequest.getInstance().get("navi/json", successCallBack: (data) {
-      print(data);
       List responseJson = json.decode(data);
       setState(() {
         dataList =

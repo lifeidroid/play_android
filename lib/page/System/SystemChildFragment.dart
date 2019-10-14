@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:play_android/entity/system_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
+import 'package:play_android/page/System/SystemDetailPage.dart';
 
+//体系-》体系
 class SystemChildFragment extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -35,7 +37,11 @@ class SystemChildFragmentState extends State<SystemChildFragment>
     }, errorCallBack: (code, msg) {});
   }
 
-  List<Widget> getChild(SystemEntity entity) {
+  ///添加子项
+  ///pEntity 父项
+  ///index 子项在父项中的位置
+  ///entity 子项
+  List<Widget> getChild(SystemEntity pEntity, int index, SystemEntity entity) {
     List<Widget> children = [];
     if (entity.children.length > 0) {
       children.add(new Row(
@@ -47,11 +53,15 @@ class SystemChildFragmentState extends State<SystemChildFragment>
         ],
       ));
       for (int i = 0; i < entity.children.length; i++) {
-        children.addAll(getChild(entity.children[i]));
+        children.addAll(getChild(entity, i, entity.children[i]));
       }
     } else {
       children.add(new GestureDetector(
-        onTap: () => {print(entity.name)},
+        onTap: () => {
+          Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
+            return new SystemDetailPage(pEntity, index);
+          }))
+        },
         child: new Container(
             padding: EdgeInsets.fromLTRB(
                 ScreenUtil.getInstance().setWidth(42),
@@ -80,7 +90,7 @@ class SystemChildFragmentState extends State<SystemChildFragment>
   List<Widget> getChildren() {
     List<Widget> children = [];
     for (int i = 0; i < dataList.length; i++) {
-      children.addAll(getChild(dataList[i]));
+      children.addAll(getChild(null, i, dataList[i]));
     }
     return children;
   }
@@ -109,6 +119,5 @@ class SystemChildFragmentState extends State<SystemChildFragment>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

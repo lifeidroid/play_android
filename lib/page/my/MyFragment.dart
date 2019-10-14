@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:play_android/Config.dart';
 import 'package:play_android/entity/coin_info_entity.dart';
 import 'package:play_android/entity/login_entity.dart';
 import 'package:play_android/event/LoginEvent.dart';
 import 'package:play_android/http/HttpRequest.dart';
 import 'package:play_android/page/login/LoginPage.dart';
+import 'package:play_android/page/my/CollectedPage.dart';
 import 'package:play_android/r.dart';
+import 'package:play_android/widget/T.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../main.dart';
@@ -20,7 +23,8 @@ class MyFragment extends StatefulWidget {
   }
 }
 
-class MyFragmentState extends State<MyFragment> {
+class MyFragmentState extends State<MyFragment>
+    with AutomaticKeepAliveClientMixin {
   void goLogin() {
     Navigator.of(context).push(
       new MaterialPageRoute(
@@ -61,19 +65,23 @@ class MyFragmentState extends State<MyFragment> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     eventBus.on<LoginEvent>().listen((event) {
-      print(event.user);
       setState(() {
-        userEntity = event.user;
+        getUserInfo();
       });
     });
     if (null == userEntity) {
       getUserInfo();
     }
-    if (null == coinInfoEntity){
+    if (null == coinInfoEntity) {
       getCoinCount();
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return new Column(
       children: <Widget>[
         new Container(
@@ -170,49 +178,46 @@ class MyFragmentState extends State<MyFragment> {
             )
           ],
         ),
-        new Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            new Padding(
-              padding: EdgeInsets.only(
-                  left: ScreenUtil.getInstance().setWidth(45),
-                  top: ScreenUtil.getInstance().setWidth(45),
-                  bottom: ScreenUtil.getInstance().setWidth(45),
-                  right: ScreenUtil.getInstance().setWidth(35)),
-              child: new Image(
-                image: AssetImage(R.assetsImgImgHeart),
-                width: ScreenUtil.getInstance().setWidth(60),
-                height: ScreenUtil.getInstance().setWidth(60),
+        new GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
+              return new CollectedPage();
+            }));
+          },
+          child: new Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              new Padding(
+                padding: EdgeInsets.only(
+                    left: ScreenUtil.getInstance().setWidth(45),
+                    top: ScreenUtil.getInstance().setWidth(45),
+                    bottom: ScreenUtil.getInstance().setWidth(45),
+                    right: ScreenUtil.getInstance().setWidth(35)),
+                child: new Image(
+                  image: AssetImage(R.assetsImgImgHeart),
+                  width: ScreenUtil.getInstance().setWidth(60),
+                  height: ScreenUtil.getInstance().setWidth(60),
+                ),
               ),
-            ),
-            new Expanded(
-                child: new Text(
-              "我的收藏",
-              style: TextStyle(
-                  fontSize: ScreenUtil.getInstance().setSp(40),
-                  color: Colors.black54),
-            )),
-            new Text(
-              null == userEntity
-                  ? ""
-                  : userEntity.collectIds.length == 0
-                      ? ""
-                      : "${userEntity.collectIds.length}",
-              style: TextStyle(
-                  fontSize: ScreenUtil.getInstance().setSp(40),
-                  color: Colors.black38),
-            ),
-            new Padding(
-              padding:
-                  EdgeInsets.only(right: ScreenUtil.getInstance().setWidth(45)),
-              child: IconButton(
-                  icon: Image(
-                image: AssetImage(R.assetsImgImgRight),
-                width: ScreenUtil.getInstance().setWidth(55),
-                height: ScreenUtil.getInstance().setWidth(55),
+              new Expanded(
+                  child: new Text(
+                "我的收藏",
+                style: TextStyle(
+                    fontSize: ScreenUtil.getInstance().setSp(40),
+                    color: Colors.black54),
               )),
-            )
-          ],
+              new Padding(
+                padding: EdgeInsets.only(
+                    right: ScreenUtil.getInstance().setWidth(45)),
+                child: IconButton(
+                    icon: Image(
+                  image: AssetImage(R.assetsImgImgRight),
+                  width: ScreenUtil.getInstance().setWidth(55),
+                  height: ScreenUtil.getInstance().setWidth(55),
+                )),
+              )
+            ],
+          ),
         ),
         new Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -319,4 +324,7 @@ class MyFragmentState extends State<MyFragment> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

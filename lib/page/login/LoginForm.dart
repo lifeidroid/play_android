@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:play_android/Api.dart';
+import 'package:play_android/Config.dart';
 import 'package:play_android/entity/login_entity.dart';
 import 'package:play_android/event/LoginEvent.dart';
 import 'package:play_android/http/HttpRequest.dart';
@@ -137,11 +139,9 @@ class LoginFormState extends State<LoginForm>
   void doLogin() async {
     var data;
     data = {'username': _name, 'password': _pwd};
-    HttpRequest.getInstance().post("user/login", data: data,
+    HttpRequest.getInstance().post(Api.LOGIN, data: data,
         successCallBack: (data) {
-      Map userMap = json.decode(data);
-      LoginEntity entity = new LoginEntity.fromJson(userMap);
-      eventBus.fire(LoginEvent(entity));
+      eventBus.fire(LoginEvent());
       T.showToast("登录成功！");
       saveInfo(data);
       Navigator.of(context).pop();
@@ -149,9 +149,11 @@ class LoginFormState extends State<LoginForm>
   }
 
   void saveInfo(data) async {
+    Map userMap = json.decode(data);
+    LoginEntity entity = new LoginEntity.fromJson(userMap);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString("userInfo", data);
-    await prefs.setString("pwd", _pwd);
+    await prefs.setString(Config.SP_USER_INFO, data);
+    await prefs.setString(Config.SP_PWD, _pwd);
   }
 
   @override

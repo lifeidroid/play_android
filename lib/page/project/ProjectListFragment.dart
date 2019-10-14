@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:play_android/entity/home_article_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 
+import '../../Api.dart';
 import '../../r.dart';
 import '../BrowserPage.dart';
 
@@ -186,12 +187,25 @@ class ProjectListFragmentState extends State<ProjectListFragment>
                                   fontSize: ScreenUtil.getInstance().setSp(35),
                                   color: const Color(0xFF999999))),
                         ),
-                        new Image(
-                          image: article.zan == 0
-                              ? AssetImage(R.assetsImgZan0)
-                              : AssetImage(R.assetsImgZan1),
-                          width: ScreenUtil.getInstance().setWidth(66),
-                          height: ScreenUtil.getInstance().setWidth(66),
+                        new GestureDetector(
+                          onTap: () => {
+                            HttpRequest.getInstance().post(
+                                article.collect == false
+                                    ? "${Api.COLLECT}${article.id}/json"
+                                    : "${Api.UN_COLLECT_ORIGIN_ID}${article.id}/json",
+                                successCallBack: (data) {
+                                  setState(() {
+                                    article.collect = !article.collect;
+                                  });
+                                }, errorCallBack: (code, msg) {})
+                          },
+                          child: new Image(
+                            image: article.collect == false
+                                ? AssetImage(R.assetsImgZan0)
+                                : AssetImage(R.assetsImgZan1),
+                            width: ScreenUtil.getInstance().setWidth(66),
+                            height: ScreenUtil.getInstance().setWidth(66),
+                          ),
                         )
                       ],
                     )
