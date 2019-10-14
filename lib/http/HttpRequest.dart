@@ -1,13 +1,12 @@
-import 'dart:collection';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:play_android/http/return_body_entity.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:cookie_jar/cookie_jar.dart';
 
 import '../Config.dart';
 import 'Code.dart';
-import 'RequestType.dart';
 
 ///http请求管理类，可单独抽取出来
 ///
@@ -49,8 +48,7 @@ class HttpRequest {
     dio = Dio(options);
 
     //Cookie管理
-//    dio.interceptors.add(CookieManager(CookieJar()));
-
+    dio.interceptors.add(CookieManager(CookieJar()));
     if (Config.DEBUG) {
       dio.interceptors
           .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
@@ -108,9 +106,7 @@ class HttpRequest {
     try {
       response = await dio.post(url,
           queryParameters: data, options: options, cancelToken: cancelToken);
-      print('post success---------${response.data}');
     } on DioError catch (e) {
-      print('post error---------$e');
       formatError(e);
     }
     if (null != response.data) {

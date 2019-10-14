@@ -1,6 +1,8 @@
 import 'package:play_android/entity/banner_entity.dart';
+import 'package:play_android/entity/coin_info_entity.dart';
 import 'package:play_android/entity/gongzh_entity.dart';
 import 'package:play_android/entity/home_article_entity.dart';
+import 'package:play_android/entity/login_entity.dart';
 import 'package:play_android/entity/project_entity.dart';
 import 'package:play_android/entity/system_entity.dart';
 import 'package:play_android/entity/system_navi_entity.dart';
@@ -12,10 +14,14 @@ class EntityFactory {
       return null;
     } else if (T.toString() == "BannerEntity") {
       return BannerEntity.fromJson(json) as T;
+    } else if (T.toString() == "CoinInfoEntity") {
+      return CoinInfoEntity.fromJson(json) as T;
     } else if (T.toString() == "GongzhEntity") {
       return GongzhEntity.fromJson(json) as T;
     } else if (T.toString() == "HomeArticleEntity") {
       return HomeArticleEntity.fromJson(json) as T;
+    } else if (T.toString() == "LoginEntity") {
+      return LoginEntity.fromJson(json) as T;
     } else if (T.toString() == "ProjectEntity") {
       return ProjectEntity.fromJson(json) as T;
     } else if (T.toString() == "SystemEntity") {

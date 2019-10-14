@@ -1,12 +1,15 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:play_android/entity/login_entity.dart';
+import 'package:play_android/event/LoginEvent.dart';
 import 'package:play_android/http/HttpRequest.dart';
-import 'package:play_android/http/httpUtil.dart';
 import 'package:play_android/widget/T.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../main.dart';
 
 class LoginForm extends StatefulWidget {
   PageController _pageController;
@@ -132,24 +135,23 @@ class LoginFormState extends State<LoginForm>
   }
 
   void doLogin() async {
-//    Map<String, String> params = new Map();
-//    params["username"] = _name;
-//    params["password"] = _pwd;
-//    var data = {'username': _name, 'password': _pwd};
-//    HttpRequest.post("user/login", data, (data) {
-//      print(data);
-//    }, (code, msg) {
-//      T.showToast(msg);
-//    });
-    doRequest();
-  }
-
-  Future doRequest() async {
     var data;
     data = {'username': _name, 'password': _pwd};
-    HttpRequest.getInstance().post("user/login",data: data,successCallBack: (data){},errorCallBack: (code,msg){
+    HttpRequest.getInstance().post("user/login", data: data,
+        successCallBack: (data) {
+      Map userMap = json.decode(data);
+      LoginEntity entity = new LoginEntity.fromJson(userMap);
+      eventBus.fire(LoginEvent(entity));
+      T.showToast("登录成功！");
+      saveInfo(data);
+      Navigator.of(context).pop();
+    }, errorCallBack: (code, msg) {});
+  }
 
-    });
+  void saveInfo(data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString("userInfo", data);
+    await prefs.setString("pwd", _pwd);
   }
 
   @override

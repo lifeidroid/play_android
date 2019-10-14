@@ -1,8 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:play_android/entity/coin_info_entity.dart';
+import 'package:play_android/entity/login_entity.dart';
+import 'package:play_android/event/LoginEvent.dart';
+import 'package:play_android/http/HttpRequest.dart';
 import 'package:play_android/page/login/LoginPage.dart';
 import 'package:play_android/r.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../main.dart';
 
 class MyFragment extends StatefulWidget {
   @override
@@ -24,8 +33,47 @@ class MyFragmentState extends State<MyFragment> {
     );
   }
 
+  LoginEntity userEntity;
+  CoinInfoEntity coinInfoEntity;
+
+//获取本地用户信息
+  getUserInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String info = prefs.getString("userInfo");
+    if (null != info && info.isNotEmpty) {
+      Map userMap = json.decode(info);
+      setState(() {
+        userEntity = new LoginEntity.fromJson(userMap);
+      });
+    }
+  }
+
+//  获取积分
+  getCoinCount() {
+    HttpRequest.getInstance().get("lg/coin/userinfo/json",
+        successCallBack: (data) {
+      print("获取个人积分：" + data);
+      Map userMap = json.decode(data);
+      setState(() {
+        coinInfoEntity = CoinInfoEntity.fromJson(userMap);
+      });
+    }, errorCallBack: (code, msg) {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    eventBus.on<LoginEvent>().listen((event) {
+      print(event.user);
+      setState(() {
+        userEntity = event.user;
+      });
+    });
+    if (null == userEntity) {
+      getUserInfo();
+    }
+    if (null == coinInfoEntity){
+      getCoinCount();
+    }
     return new Column(
       children: <Widget>[
         new Container(
@@ -47,7 +95,7 @@ class MyFragmentState extends State<MyFragment> {
                 height: ScreenUtil.getInstance().setWidth(30),
               ),
               new Text(
-                "去登陆",
+                null == userEntity ? "去登陆" : userEntity.nickname,
                 style: TextStyle(
                     fontSize: ScreenUtil.getInstance().setSp(60),
                     color: Colors.white),
@@ -56,7 +104,7 @@ class MyFragmentState extends State<MyFragment> {
                 height: ScreenUtil.getInstance().setWidth(20),
               ),
               new Text(
-                "ID:---",
+                null == userEntity ? "ID:---" : "ID:${userEntity.id}",
                 style: TextStyle(
                     fontSize: ScreenUtil.getInstance().setSp(35),
                     color: Colors.white),
@@ -65,7 +113,9 @@ class MyFragmentState extends State<MyFragment> {
                 height: ScreenUtil.getInstance().setWidth(20),
               ),
               new Text(
-                "等级:---   排名：--",
+                null == coinInfoEntity
+                    ? "等级:---   排名：--"
+                    : "等级:1   排名：${coinInfoEntity.rank}",
                 style: TextStyle(
                     fontSize: ScreenUtil.getInstance().setSp(35),
                     color: Colors.white),
@@ -102,6 +152,12 @@ class MyFragmentState extends State<MyFragment> {
                   fontSize: ScreenUtil.getInstance().setSp(40),
                   color: Colors.black54),
             )),
+            new Text(
+              null == coinInfoEntity ? "" : "${coinInfoEntity.coinCount}",
+              style: TextStyle(
+                  fontSize: ScreenUtil.getInstance().setSp(40),
+                  color: Colors.black38),
+            ),
             new Padding(
               padding:
                   EdgeInsets.only(right: ScreenUtil.getInstance().setWidth(45)),
@@ -136,6 +192,16 @@ class MyFragmentState extends State<MyFragment> {
                   fontSize: ScreenUtil.getInstance().setSp(40),
                   color: Colors.black54),
             )),
+            new Text(
+              null == userEntity
+                  ? ""
+                  : userEntity.collectIds.length == 0
+                      ? ""
+                      : "${userEntity.collectIds.length}",
+              style: TextStyle(
+                  fontSize: ScreenUtil.getInstance().setSp(40),
+                  color: Colors.black38),
+            ),
             new Padding(
               padding:
                   EdgeInsets.only(right: ScreenUtil.getInstance().setWidth(45)),

@@ -29,6 +29,9 @@ dependencies:
   webview_flutter: ^0.3.14  #WebView
   # https://github.com/flutterchina/cookie_jar
   cookie_jar: ^1.0.0
+  dio_cookie_manager: ^1.0.0  #latest version
+  shared_preferences: ^0.5.3+4
+  event_bus: ^1.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
