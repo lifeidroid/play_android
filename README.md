@@ -23,7 +23,7 @@ Flutter版的玩安卓客户端，适合新手.
   ...
   
   ## 应用开发轨迹
-- [在怀疑中迈开第一步](https://blog.csdn.net/u010055819/article/details/102567399)
+- [在怀疑中迈开第一步](https://www.androidcup.com/index.php/2019/10/15/%e3%80%90%e6%8a%80%e6%9c%af%e5%88%86%e4%ba%ab%e3%80%91%e7%ac%ac%e4%b8%80%e7%ab%a0%ef%bc%9a%e5%9c%a8%e6%80%80%e7%96%91%e4%b8%ad%e8%bf%88%e5%bc%80%e7%ac%ac%e4%b8%80%e6%ad%a5/)
 - 代码初试，心起排斥（待更新）
 - 鼓起勇气，大胆尝试（待更新）
 - 待续...
