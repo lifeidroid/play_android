@@ -10,6 +10,9 @@ class Api {
   //首页文章列表
   static const String ARTICLE_LIST = "article/list/";
 
+  //置顶文章
+  static const String ARTICLE_TOP = "article/top/json";
+
   //体系数据
   static const String TREE = "tree/json";
 
@@ -48,5 +51,14 @@ class Api {
 
   //取消收藏-收藏页面
   static const String UN_COLLECT = "lg/uncollect/";
+
+  //获取公众号列表
+  static const String WXARTICLE_CHAPTERS = "wxarticle/chapters/json";
+
+  //查看某个公众号历史数据
+  static const String WXARTICLE_LIST = "wxarticle/list/";
+
+  //获取个人积分，需要登录后访问
+  static const String COIN_USERINFO = "lg/coin/userinfo/json";
 
 }

@@ -7,6 +7,7 @@ import 'package:play_android/entity/system_entity.dart';
 import 'package:play_android/entity/system_navi_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 
+import '../../Api.dart';
 import '../BrowserPage.dart';
 
 class SystemNaviFragment extends StatefulWidget {
@@ -28,7 +29,7 @@ class SystemNaviFragmentState extends State<SystemNaviFragment>
 
 //  获取首页banner
   void getData() async {
-    HttpRequest.getInstance().get("navi/json", successCallBack: (data) {
+    HttpRequest.getInstance().get(Api.NAVI, successCallBack: (data) {
       List responseJson = json.decode(data);
       setState(() {
         dataList =

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:play_android/Api.dart';
 import 'package:play_android/entity/gongzh_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 
@@ -15,7 +16,7 @@ class GongzhFragment extends StatefulWidget {
 }
 
 class GongzhFragmentState extends State<GongzhFragment>
-    with SingleTickerProviderStateMixin{
+    with SingleTickerProviderStateMixin {
   TabController mTabController;
   List<GongzhEntity> datas = [];
   int index = 0;
@@ -24,7 +25,7 @@ class GongzhFragmentState extends State<GongzhFragment>
 
   //  获取首页banner
   void getData() async {
-    HttpRequest.getInstance().get("wxarticle/chapters/json", data: null,
+    HttpRequest.getInstance().get(Api.WXARTICLE_CHAPTERS, data: null,
         successCallBack: (data) {
       List responseJson = json.decode(data);
       setState(() {

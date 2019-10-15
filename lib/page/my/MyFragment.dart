@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:play_android/Config.dart';
 import 'package:play_android/entity/coin_info_entity.dart';
 import 'package:play_android/entity/login_entity.dart';
 import 'package:play_android/event/LoginEvent.dart';
@@ -11,9 +10,9 @@ import 'package:play_android/http/HttpRequest.dart';
 import 'package:play_android/page/login/LoginPage.dart';
 import 'package:play_android/page/my/CollectedPage.dart';
 import 'package:play_android/r.dart';
-import 'package:play_android/widget/T.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Api.dart';
 import '../../main.dart';
 
 class MyFragment extends StatefulWidget {
@@ -54,9 +53,8 @@ class MyFragmentState extends State<MyFragment>
 
 //  获取积分
   getCoinCount() {
-    HttpRequest.getInstance().get("lg/coin/userinfo/json",
+    HttpRequest.getInstance().get(Api.COIN_USERINFO,
         successCallBack: (data) {
-      print("获取个人积分：" + data);
       Map userMap = json.decode(data);
       setState(() {
         coinInfoEntity = CoinInfoEntity.fromJson(userMap);

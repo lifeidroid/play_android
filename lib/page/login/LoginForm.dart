@@ -136,7 +136,7 @@ class LoginFormState extends State<LoginForm>
     );
   }
 
-  void doLogin() async {
+  void doLogin() {
     var data;
     data = {'username': _name, 'password': _pwd};
     HttpRequest.getInstance().post(Api.LOGIN, data: data,

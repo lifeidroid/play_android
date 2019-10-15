@@ -1,9 +1,12 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:play_android/Api.dart';
 import 'package:play_android/http/return_body_entity.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:play_android/page/login/LoginPage.dart';
 
 import '../Config.dart';
 import 'Code.dart';
@@ -11,7 +14,7 @@ import 'Code.dart';
 ///http请求管理类，可单独抽取出来
 ///
 class HttpRequest {
-  static String _baseUrl = "https://www.wanandroid.com/";
+  static String _baseUrl = Api.BASE_URL;
   static HttpRequest instance;
   Dio dio;
   BaseOptions options;
@@ -36,9 +39,7 @@ class HttpRequest {
       //响应流上前后两次接受到数据的间隔，单位为毫秒。
       receiveTimeout: 15000,
       //Http请求头.
-      headers: {
-        "version": "1.0.0"
-      },
+      headers: {"version": "1.0.0"},
       //请求的Content-Type，默认值是[ContentType.json]. 也可以用ContentType.parse("application/x-www-form-urlencoded")
 //      contentType: ContentType.json,
       //表示期望以那种格式(方式)接受响应数据。接受四种类型 `json`, `stream`, `plain`, `bytes`. 默认值是 `json`,
@@ -73,7 +74,13 @@ class HttpRequest {
   /*
    * get请求
    */
-  get(url, {data, options, cancelToken,Function successCallBack, Function errorCallBack}) async {
+  get(url,
+      {data,
+      options,
+      cancelToken,
+      BuildContext context,
+      Function successCallBack,
+      Function errorCallBack}) async {
     Response response;
     try {
       response = await dio.get(url,
@@ -83,12 +90,31 @@ class HttpRequest {
     }
     if (null != response.data) {
       ReturnBodyEntity returnBodyEntity =
-      ReturnBodyEntity.fromJson(json.decode(response.data));
+          ReturnBodyEntity.fromJson(json.decode(response.data));
       if (null != returnBodyEntity) {
-        if (returnBodyEntity.errorCode == 0) {
-          successCallBack(jsonEncode(returnBodyEntity.data));
-        } else {
-          errorCallBack(returnBodyEntity.errorCode, returnBodyEntity.errorMsg);
+        switch (returnBodyEntity.errorCode) {
+          case 0:
+            successCallBack(jsonEncode(returnBodyEntity.data));
+            break;
+          case -1001:
+            errorCallBack(
+                returnBodyEntity.errorCode, returnBodyEntity.errorMsg);
+            if (null != context) {
+              Navigator.of(context).push(
+                new MaterialPageRoute(
+                  builder: (context) {
+                    return new Scaffold(
+                      body: new LoginPage(),
+                    );
+                  },
+                ),
+              );
+            }
+            break;
+          default:
+            errorCallBack(
+                returnBodyEntity.errorCode, returnBodyEntity.errorMsg);
+            break;
         }
       } else {
         errorCallBack(Code.NETWORK_JSON_EXCEPTION, "网络数据有问题");
@@ -101,7 +127,13 @@ class HttpRequest {
   /*
    * post请求
    */
-  post(url, {data, options, cancelToken,Function successCallBack, Function errorCallBack}) async {
+  post(url,
+      {data,
+      options,
+      cancelToken,
+      BuildContext context,
+      Function successCallBack,
+      Function errorCallBack}) async {
     Response response;
     try {
       response = await dio.post(url,
@@ -111,12 +143,31 @@ class HttpRequest {
     }
     if (null != response.data) {
       ReturnBodyEntity returnBodyEntity =
-      ReturnBodyEntity.fromJson(json.decode(response.data));
+          ReturnBodyEntity.fromJson(json.decode(response.data));
       if (null != returnBodyEntity) {
-        if (returnBodyEntity.errorCode == 0) {
-          successCallBack(jsonEncode(returnBodyEntity.data));
-        } else {
-          errorCallBack(returnBodyEntity.errorCode, returnBodyEntity.errorMsg);
+        switch (returnBodyEntity.errorCode) {
+          case 0:
+            successCallBack(jsonEncode(returnBodyEntity.data));
+            break;
+          case -1001:
+            errorCallBack(
+                returnBodyEntity.errorCode, returnBodyEntity.errorMsg);
+            if (null != context) {
+              Navigator.of(context).push(
+                new MaterialPageRoute(
+                  builder: (context) {
+                    return new Scaffold(
+                      body: new LoginPage(),
+                    );
+                  },
+                ),
+              );
+            }
+            break;
+          default:
+            errorCallBack(
+                returnBodyEntity.errorCode, returnBodyEntity.errorMsg);
+            break;
         }
       } else {
         errorCallBack(Code.NETWORK_JSON_EXCEPTION, "网络数据有问题");
@@ -134,14 +185,13 @@ class HttpRequest {
     try {
       response = await dio.download(urlPath, savePath,
           onReceiveProgress: (int count, int total) {
-            //进度
-            print("$count $total");
-          });
+        //进度
+        print("$count $total");
+      });
       print('downloadFile success---------${response.data}');
     } on DioError catch (e) {
       print('downloadFile error---------$e');
       formatError(e);
-
     }
     return response.data;
   }

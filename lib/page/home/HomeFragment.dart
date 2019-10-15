@@ -48,7 +48,7 @@ class MovieListState extends State<MovieList>
 
 //  加载置顶文章
   loadTopData() async {
-    HttpRequest.getInstance().get("article/top/json", successCallBack: (data) {
+    HttpRequest.getInstance().get(Api.ARTICLE_TOP, successCallBack: (data) {
       List responseJson = json.decode(data);
       List<HomeArticleEntity> cardbeanList =
           responseJson.map((m) => new HomeArticleEntity.fromJson(m)).toList();
@@ -59,7 +59,7 @@ class MovieListState extends State<MovieList>
 
 //  加载文章
   loadArticleData() async {
-    HttpRequest.getInstance().get("article/list/$currentPage/json",
+    HttpRequest.getInstance().get("${Api.ARTICLE_LIST}$currentPage/json",
         successCallBack: (data) {
       Map<String, dynamic> dataJson = json.decode(data);
       List responseJson = json.decode(json.encode(dataJson["datas"]));
@@ -74,7 +74,7 @@ class MovieListState extends State<MovieList>
 
 //  获取首页banner
   void getBanner() async {
-    HttpRequest.getInstance().post("banner/json", successCallBack: (data) {
+    HttpRequest.getInstance().post(Api.BANNER, successCallBack: (data) {
       print(data);
       List responseJson = json.decode(data);
       List<BannerEntity> cardbeanList =
@@ -309,7 +309,7 @@ class MovieListState extends State<MovieList>
                               setState(() {
                                 article.collect = !article.collect;
                               });
-                            }, errorCallBack: (code, msg) {})
+                            }, errorCallBack: (code, msg) {}, context: context)
                           },
                           child: new Image(
                             image: article.collect == false

@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:play_android/http/HttpRequest.dart';
+import 'package:play_android/widget/T.dart';
+
+import '../../Api.dart';
 
 //注册页面
 class RegisterForm extends StatefulWidget {
@@ -17,12 +21,14 @@ class RegisterForm extends StatefulWidget {
 class RegisterFormState extends State<RegisterForm>
     with AutomaticKeepAliveClientMixin {
   PageController _pageController;
+  String name;
+  String pwd;
+  String pwd2;
 
   RegisterFormState(this._pageController);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -70,10 +76,14 @@ class RegisterFormState extends State<RegisterForm>
             children: <Widget>[
               new TextField(
                 decoration: InputDecoration(
-                    filled: true,
-                    hintText: "请输入用户名",
-                    fillColor: Colors.transparent,
-                    prefixIcon: Icon(Icons.account_circle)),
+                  filled: true,
+                  hintText: "请输入用户名",
+                  fillColor: Colors.transparent,
+                  prefixIcon: Icon(Icons.account_circle),
+                ),
+                onChanged: (val) {
+                  name = val;
+                },
               ),
               new Container(
                 height: ScreenUtil.getInstance().setWidth(30),
@@ -84,6 +94,10 @@ class RegisterFormState extends State<RegisterForm>
                     hintText: "请输入密码",
                     fillColor: Colors.transparent,
                     prefixIcon: Icon(Icons.lock_open)),
+                obscureText: true,
+                onChanged: (val) {
+                  pwd = val;
+                },
               ),
               new Container(
                 height: ScreenUtil.getInstance().setWidth(30),
@@ -94,6 +108,10 @@ class RegisterFormState extends State<RegisterForm>
                     hintText: "请输入密码",
                     fillColor: Colors.transparent,
                     prefixIcon: Icon(Icons.lock_open)),
+                obscureText: true,
+                onChanged: (val) {
+                  pwd2 = val;
+                },
               ),
               new Container(
                   width: double.infinity,
@@ -101,7 +119,9 @@ class RegisterFormState extends State<RegisterForm>
                       top: ScreenUtil.getInstance().setWidth(85)),
                   height: ScreenUtil.getInstance().setWidth(120),
                   child: new RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        doRegister();
+                      },
                       textColor: Colors.white,
                       child: new Text(
                         "注册",
@@ -119,6 +139,21 @@ class RegisterFormState extends State<RegisterForm>
         ),
       ],
     );
+  }
+
+  //注册
+  void doRegister() {
+    var data;
+    data = {'username': name, 'password': pwd, "repassword": pwd2};
+    HttpRequest.getInstance().post(Api.REGISTER, data: data,
+        successCallBack: (data) {
+      T.showToast("注册成功,去登录吧^_^");
+      _pageController.animateToPage(0,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.ease);
+    }, errorCallBack: (code, msg) {
+      T.showToast(msg);
+    });
   }
 
   @override

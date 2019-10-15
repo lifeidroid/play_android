@@ -40,7 +40,7 @@ class CollectedPageState extends State<CollectedPage> {
       setState(() {
         articleList.addAll(cardbeanList);
       });
-    }, errorCallBack: (code, msg) {});
+    }, errorCallBack: (code, msg) {},context: context);
   }
 
   @override

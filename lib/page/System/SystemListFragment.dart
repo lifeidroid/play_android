@@ -38,8 +38,9 @@ class SystemListFragmentState extends State<SystemListFragment>
 
   //  加载文章
   loadArticleData() async {
-    HttpRequest.getInstance().get("wxarticle/list/$_Id/$currentPage/json",
-        successCallBack: (data) {
+    var params = {"cid": _Id};
+    HttpRequest.getInstance().get("${Api.ARTICLE_LIST}$currentPage/json",
+        data: params, successCallBack: (data) {
       Map<String, dynamic> dataJson = json.decode(data);
       List responseJson = json.decode(json.encode(dataJson["datas"]));
       print(responseJson.runtimeType);
@@ -118,12 +119,12 @@ class SystemListFragmentState extends State<SystemListFragment>
                       children: <Widget>[
                         article.fresh == true
                             ? new Text(
-                          "新•",
-                          style: new TextStyle(
-                              fontSize:
-                              ScreenUtil.getInstance().setSp(32),
-                              color: const Color(0xFF4282f4)),
-                        )
+                                "新•",
+                                style: new TextStyle(
+                                    fontSize:
+                                        ScreenUtil.getInstance().setSp(32),
+                                    color: const Color(0xFF4282f4)),
+                              )
                             : new Container(),
                         new Text(
                           article.author,
@@ -135,9 +136,9 @@ class SystemListFragmentState extends State<SystemListFragment>
                             child: article.tags.length == 0
                                 ? new Container()
                                 : new Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: getTags(article),
-                            )),
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: getTags(article),
+                                  )),
                         new Text(
                           article.niceDate,
                           style: new TextStyle(
@@ -154,17 +155,17 @@ class SystemListFragmentState extends State<SystemListFragment>
                       children: <Widget>[
                         article.envelopePic != ""
                             ? new Container(
-                          child: new Image(
-                              image: NetworkImage(article.envelopePic),
-                              width:
-                              ScreenUtil.getInstance().setWidth(330),
-                              fit: BoxFit.fitWidth,
-                              height:
-                              ScreenUtil.getInstance().setWidth(220)),
-                          margin: EdgeInsets.only(
-                              right:
-                              ScreenUtil.getInstance().setWidth(30)),
-                        )
+                                child: new Image(
+                                    image: NetworkImage(article.envelopePic),
+                                    width:
+                                        ScreenUtil.getInstance().setWidth(330),
+                                    fit: BoxFit.fitWidth,
+                                    height:
+                                        ScreenUtil.getInstance().setWidth(220)),
+                                margin: EdgeInsets.only(
+                                    right:
+                                        ScreenUtil.getInstance().setWidth(30)),
+                              )
                             : new Container(),
                         new Expanded(
                           child: new Text(
@@ -209,10 +210,10 @@ class SystemListFragmentState extends State<SystemListFragment>
                                     ? "${Api.COLLECT}${article.id}/json"
                                     : "${Api.UN_COLLECT_ORIGIN_ID}${article.id}/json",
                                 successCallBack: (data) {
-                                  setState(() {
-                                    article.collect = !article.collect;
-                                  });
-                                }, errorCallBack: (code, msg) {})
+                              setState(() {
+                                article.collect = !article.collect;
+                              });
+                            }, errorCallBack: (code, msg) {}, context: context)
                           },
                           child: new Image(
                             image: article.collect == false

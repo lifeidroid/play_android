@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:play_android/Api.dart';
 import 'package:play_android/entity/system_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 import 'package:play_android/page/System/SystemDetailPage.dart';
@@ -27,7 +28,7 @@ class SystemChildFragmentState extends State<SystemChildFragment>
 
 //  获取数据
   void getData() async {
-    HttpRequest.getInstance().get("tree/json", successCallBack: (data) {
+    HttpRequest.getInstance().get(Api.TREE, successCallBack: (data) {
       print(data);
       List responseJson = json.decode(data);
       setState(() {

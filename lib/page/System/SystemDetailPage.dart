@@ -24,7 +24,7 @@ class SystemDetailPageState extends State<SystemDetailPage>
   var tabs = <Tab>[];
   TabController mTabController;
   int index = 0;
-  var mPageController = new PageController(initialPage: 0);
+  PageController mPageController;
   var isPageCanChanged = true;
 
   SystemDetailPageState(this.entity,this.index);
@@ -35,6 +35,7 @@ class SystemDetailPageState extends State<SystemDetailPage>
     for (var i = 0; i < entity.children.length; i++) {
       tabs.add(Tab(text: entity.children[i].name));
     }
+    mPageController = new PageController(initialPage: index);
     //initialIndex初始选中第几个
     mTabController =
         TabController(initialIndex: index, length: tabs.length, vsync: this);

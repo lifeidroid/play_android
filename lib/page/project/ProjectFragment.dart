@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:play_android/Api.dart';
 import 'package:play_android/entity/project_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 
@@ -24,7 +25,7 @@ class ProjectFragmentState extends State<ProjectFragment>
 
   //  获取首页banner
   void getData() async {
-    HttpRequest.getInstance().get("project/tree/json", successCallBack: (data) {
+    HttpRequest.getInstance().get(Api.PROJECT, successCallBack: (data) {
       List responseJson = json.decode(data);
       setState(() {
         datas = responseJson.map((m) => new ProjectEntity.fromJson(m)).toList();

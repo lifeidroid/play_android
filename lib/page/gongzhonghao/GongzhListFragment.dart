@@ -38,7 +38,7 @@ class GongzhListFragmentState extends State<GongzhListFragment>
 
   //  加载文章
   loadArticleData() async {
-    HttpRequest.getInstance().get("wxarticle/list/$_Id/$currentPage/json",
+    HttpRequest.getInstance().get("${Api.WXARTICLE_LIST}$_Id/$currentPage/json",
         successCallBack: (data) {
       Map<String, dynamic> dataJson = json.decode(data);
       List responseJson = json.decode(json.encode(dataJson["datas"]));
@@ -162,7 +162,7 @@ class GongzhListFragmentState extends State<GongzhListFragment>
                               setState(() {
                                 article.collect = !article.collect;
                               });
-                            }, errorCallBack: (code, msg) {})
+                            }, errorCallBack: (code, msg) {}, context: context)
                           },
                           child: new Image(
                             image: article.collect == false

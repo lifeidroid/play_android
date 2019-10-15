@@ -63,7 +63,6 @@ class SplashViewState extends State<SplashView> {
 //  保存用户信息
   void saveInfo(data) async {
     Map userMap = json.decode(data);
-    LoginEntity entity = new LoginEntity.fromJson(userMap);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(Config.SP_USER_INFO, data);
   }
@@ -79,6 +78,7 @@ class SplashViewState extends State<SplashView> {
 //          },
 //        ),
 //      );
+
       Navigator.pushAndRemoveUntil(
         context,
         new MaterialPageRoute(builder: (context) => new MainPage()),
@@ -97,11 +97,18 @@ class SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 1080, height: 1920)..init(context);
-    return new Container(
-      decoration: BoxDecoration(
-        color: Colors.lightBlue,
-      ),
-      child: new Image(image: AssetImage(R.assetsImgIcLauncherForeground)),
-    );
+    return new Scaffold(
+        body: new Container(
+            width: ScreenUtil.screenWidth,
+            height: ScreenUtil.screenHeight,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Colors.lightBlue,
+            ),
+            child: new Image(
+              image: AssetImage(R.assetsImgLogo),
+              width: ScreenUtil.getInstance().setWidth(350),
+              height: ScreenUtil.getInstance().setWidth(350),
+            )));
   }
 }
