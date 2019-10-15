@@ -22,3 +22,4 @@ Flutter版的玩安卓客户端，适合新手.
   event_bus: ^1.1.0 #Flutter版的EventBus
   ...
   
+  ## 应用开发过程中遇到的问题
