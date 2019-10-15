@@ -1,4 +1,4 @@
-# play_android
+# play_android（Flutter）
 
 Flutter版的玩安卓客户端，适合新手.
 
