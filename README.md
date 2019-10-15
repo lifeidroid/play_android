@@ -15,6 +15,11 @@ Flutter版的玩安卓客户端，练手用(更新中。。。).
   dio: ^3.0.2 #网络请求框架  
   cupertino_icons: ^0.1.2  
   flutter_easyrefresh: ^2.0.4 #下拉刷新  
+  webview_flutter: ^0.3.14  #WebView  
+  cookie_jar: ^1.0.0  #网络Cookie  
+  dio_cookie_manager: ^1.0.0  #网络Cookie管理  
+  shared_preferences: ^0.5.3+4 #本地配置文件存储   
+  event_bus: ^1.1.0 #Flutter版的EventBus
   ...
   
   
