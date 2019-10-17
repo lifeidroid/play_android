@@ -62,23 +62,12 @@ class SplashViewState extends State<SplashView> {
 
 //  保存用户信息
   void saveInfo(data) async {
-    Map userMap = json.decode(data);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(Config.SP_USER_INFO, data);
   }
 
   void countdown() {
     Timer timer = new Timer(new Duration(seconds: 3), () {
-//      Navigator.of(context).push(
-//        new MaterialPageRoute(
-//          builder: (context) {
-//            return new Scaffold(
-//              body: new MainPage(),
-//            );
-//          },
-//        ),
-//      );
-
       Navigator.pushAndRemoveUntil(
         context,
         new MaterialPageRoute(builder: (context) => new MainPage()),
