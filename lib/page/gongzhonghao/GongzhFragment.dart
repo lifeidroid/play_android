@@ -76,6 +76,7 @@ class GongzhFragmentState extends State<GongzhFragment>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xff4282f4),
         centerTitle: true,
         title: datas.length == 0
             ? Text("加载中..")

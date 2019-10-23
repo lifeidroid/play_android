@@ -76,6 +76,7 @@ class ProjectFragmentState extends State<ProjectFragment>
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        backgroundColor: Color(0xff4282f4),
         title: datas.length == 0
             ? Text("加载中..")
             : TabBar(

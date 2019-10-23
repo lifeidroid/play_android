@@ -22,6 +22,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: SplashView(),
+      theme: new ThemeData(
+          primarySwatch: Colors.blue,
+          platform: TargetPlatform.iOS//添加这个属性即可
+      ),
     );
   }
 }

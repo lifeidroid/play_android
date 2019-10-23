@@ -10,11 +10,11 @@ class SystemDetailPage extends StatefulWidget {
   SystemEntity entity;
   int current;
 
-  SystemDetailPage(this.entity,this.current);
+  SystemDetailPage(this.entity, this.current);
 
   @override
   State<StatefulWidget> createState() {
-    return SystemDetailPageState(entity,current);
+    return SystemDetailPageState(entity, current);
   }
 }
 
@@ -27,7 +27,7 @@ class SystemDetailPageState extends State<SystemDetailPage>
   PageController mPageController;
   var isPageCanChanged = true;
 
-  SystemDetailPageState(this.entity,this.index);
+  SystemDetailPageState(this.entity, this.index);
 
   @override
   void initState() {
@@ -64,27 +64,33 @@ class SystemDetailPageState extends State<SystemDetailPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: TabBar(
-          controller: mTabController,
-          //可以和TabBarView使用同一个TabController
-          tabs: tabs,
-          isScrollable: true,
-          indicatorColor: Colors.transparent,
-          indicatorWeight: 1,
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicatorPadding: EdgeInsets.only(bottom: 10.0),
-          labelPadding: EdgeInsets.only(left: 20),
-          labelColor: Colors.white,
-          labelStyle: TextStyle(
-            fontSize: ScreenUtil.getInstance().setSp(45),
+          centerTitle: true,
+          backgroundColor: Color(0xff4282f4),
+          bottom: TabBar(
+            controller: mTabController,
+            //可以和TabBarView使用同一个TabController
+            tabs: tabs,
+            isScrollable: true,
+            indicatorColor: Colors.transparent,
+            indicatorWeight: 1,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorPadding: EdgeInsets.only(bottom: 10.0),
+            labelPadding: EdgeInsets.only(left: 20),
+            labelColor: Colors.white,
+            labelStyle: TextStyle(
+              fontSize: ScreenUtil.getInstance().setSp(45),
+            ),
+            unselectedLabelColor: Color(0x90ffffff),
+            unselectedLabelStyle: TextStyle(
+              fontSize: ScreenUtil.getInstance().setSp(45),
+            ),
           ),
-          unselectedLabelColor: Color(0x90ffffff),
-          unselectedLabelStyle: TextStyle(
-            fontSize: ScreenUtil.getInstance().setSp(45),
-          ),
-        ),
-      ),
+          title: Text(
+            entity.name,
+            style: TextStyle(
+                fontSize: ScreenUtil.getInstance().setSp(50),
+                color: Colors.white),
+          )),
       body: new PageView.builder(
         onPageChanged: (index) {
           if (isPageCanChanged) {

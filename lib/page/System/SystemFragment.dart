@@ -52,6 +52,7 @@ class SystemFragmentState extends State<SystemFragment>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xff4282f4),
         centerTitle: true,
         title: TabBar(
           controller: mTabController,//可以和TabBarView使用同一个TabController

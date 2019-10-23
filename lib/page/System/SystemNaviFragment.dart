@@ -61,10 +61,10 @@ class SystemNaviFragmentState extends State<SystemNaviFragment>
           },
           child: new Container(
               padding: EdgeInsets.fromLTRB(
-                  ScreenUtil.getInstance().setWidth(42),
-                  ScreenUtil.getInstance().setWidth(25),
-                  ScreenUtil.getInstance().setWidth(42),
-                  ScreenUtil.getInstance().setWidth(25)),
+                  ScreenUtil.getInstance().setWidth(50),
+                  ScreenUtil.getInstance().setWidth(20),
+                  ScreenUtil.getInstance().setWidth(50),
+                  ScreenUtil.getInstance().setWidth(20)),
               decoration: new BoxDecoration(
                 border: new Border.all(color: Colors.transparent, width: 1),
                 // 边色与边宽度
@@ -76,7 +76,7 @@ class SystemNaviFragmentState extends State<SystemNaviFragment>
                 dataList[i].articles[j].title,
                 textAlign: TextAlign.center,
                 style: new TextStyle(
-                    fontSize: ScreenUtil.getInstance().setSp(40),
+                    fontSize: ScreenUtil.getInstance().setSp(36),
                     color: const Color(0xFF999999)),
               )),
         ));

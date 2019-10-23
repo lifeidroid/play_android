@@ -8,38 +8,23 @@ import 'package:play_android/Api.dart';
 import 'package:play_android/entity/banner_entity.dart';
 import 'package:play_android/entity/home_article_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
+import 'package:play_android/page/SearchPage.dart';
 import 'package:play_android/r.dart';
 
 import '../BrowserPage.dart';
 
-class HomeFragment extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('首页'),
-        centerTitle: true,
-      ),
-      body: new MovieList(),
-    );
-  }
-}
-
-class MovieList extends StatefulWidget {
-  //构造器传递数据（并且接收上个页面传递的数据）
-  MovieList({Key key}) : super(key: key);
-
+class HomeFragment extends StatefulWidget {
   //滚动Banner图
   List<BannerEntity> bannerList = [];
   SwiperController _swiperController;
 
   @override
   State<StatefulWidget> createState() {
-    return new MovieListState();
+    return new HomeFragmentState();
   }
 }
 
-class MovieListState extends State<MovieList>
+class HomeFragmentState extends State<HomeFragment>
     with AutomaticKeepAliveClientMixin {
   List<HomeArticleEntity> articleList = new List();
   int currentPage = 0; //第一页
@@ -112,52 +97,70 @@ class MovieListState extends State<MovieList>
 
   @override
   Widget build(BuildContext context) {
-    return EasyRefresh(
-      child: ListView.builder(
-          itemCount: articleList.length,
-          itemBuilder: (context, index) {
-            if (index == 0) {
-              return Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: ScreenUtil.getInstance().setWidth(600),
-                  child: Swiper(
-                    itemBuilder: _swiperBuilder,
-                    itemCount: bannerList.length,
-                    loop: false,
-                    autoplay: false,
-                    controller: _swiperController,
-                    pagination: new SwiperPagination(
-                        builder: DotSwiperPaginationBuilder(
-                      color: Colors.black54,
-                      activeColor: Colors.white,
-                    )),
-                    control: new SwiperControl(),
-                    scrollDirection: Axis.horizontal,
-                    onTap: (index) => {
-                      Navigator.of(context)
-                          .push(new MaterialPageRoute(builder: (_) {
-                        return new Browser(
-                          url: articleList[index].link,
-                          title: articleList[index].title,
-                        );
-                      }))
-                    },
-                  ));
-            } else {
-              return renderRow(index - 1, context);
-            }
-          }),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('首页'),
+        backgroundColor: Color(0xff4282f4),
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            disabledColor: Colors.white,
+            onPressed: () {
+              Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
+                return SearchPage();
+              }));
+            },
+          ),
+        ],
+      ),
+      body: EasyRefresh(
+        child: ListView.builder(
+            itemCount: articleList.length,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: ScreenUtil.getInstance().setWidth(600),
+                    child: Swiper(
+                      itemBuilder: _swiperBuilder,
+                      itemCount: bannerList.length,
+                      loop: false,
+                      autoplay: false,
+                      controller: _swiperController,
+                      pagination: new SwiperPagination(
+                          builder: DotSwiperPaginationBuilder(
+                        color: Colors.black54,
+                        activeColor: Colors.white,
+                      )),
+                      control: new SwiperControl(),
+                      scrollDirection: Axis.horizontal,
+                      onTap: (index) => {
+                        Navigator.of(context)
+                            .push(new MaterialPageRoute(builder: (_) {
+                          return new Browser(
+                            url: articleList[index].link,
+                            title: articleList[index].title,
+                          );
+                        }))
+                      },
+                    ));
+              } else {
+                return renderRow(index - 1, context);
+              }
+            }),
 //      header: MaterialHeader(),
 //      footer: MaterialFooter(),
-      onRefresh: () async {
-        articleList.clear();
-        currentPage = 0;
-        loadTopData();
-      },
-      onLoad: () async {
-        currentPage++;
-        loadArticleData();
-      },
+        onRefresh: () async {
+          articleList.clear();
+          currentPage = 0;
+          loadTopData();
+        },
+        onLoad: () async {
+          currentPage++;
+          loadArticleData();
+        },
+      ),
     );
   }
 
@@ -186,149 +189,143 @@ class MovieListState extends State<MovieList>
   renderRow(index, context) {
     var article = articleList[index];
     return new Container(
-        color: Colors.white,
         child: new InkWell(
-          onTap: () {
-            Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
-              return new Browser(
-                url: article.link,
-                title: article.title,
-              );
-            }));
-          },
-          child: new Column(
-            children: <Widget>[
-              new Container(
-                margin: EdgeInsets.all(ScreenUtil.getInstance().setWidth(45)),
-                child: new Column(
+      onTap: () {
+        Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
+          return new Browser(
+            url: article.link,
+            title: article.title,
+          );
+        }));
+      },
+      child: new Column(
+        children: <Widget>[
+          new Container(
+            margin: EdgeInsets.all(ScreenUtil.getInstance().setWidth(45)),
+            child: new Column(
+              children: <Widget>[
+                new Row(
                   children: <Widget>[
-                    new Row(
-                      children: <Widget>[
-                        article.type == 1
-                            ? new Text(
-                                "置顶•",
-                                style: new TextStyle(
-                                    fontSize:
-                                        ScreenUtil.getInstance().setSp(32),
-                                    color: const Color(0xFFf86734)),
-                              )
-                            : new Container(),
-                        article.fresh == true
-                            ? new Text(
-                                "新•",
-                                style: new TextStyle(
-                                    fontSize:
-                                        ScreenUtil.getInstance().setSp(32),
-                                    color: const Color(0xFF4282f4)),
-                              )
-                            : new Container(),
-                        new Text(
-                          article.author,
-                          style: new TextStyle(
-                              fontSize: ScreenUtil.getInstance().setSp(32),
-                              color: const Color(0xFF6e6e6e)),
-                        ),
-                        new Expanded(
-                            child: article.tags.length == 0
-                                ? new Container()
-                                : new Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: getTags(article),
-                                  )),
-                        new Text(
-                          article.niceDate,
-                          style: new TextStyle(
-                              fontSize: ScreenUtil.getInstance().setSp(32),
-                              color: const Color(0xFF999999)),
-                        )
-                      ],
-                    ),
-                    new Divider(
-                      height: ScreenUtil.getInstance().setWidth(30),
-                      color: Colors.transparent,
-                    ),
-                    new Row(
-                      children: <Widget>[
-                        article.envelopePic != ""
-                            ? new Container(
-                                child: new Image(
-                                    image: NetworkImage(article.envelopePic),
-                                    width:
-                                        ScreenUtil.getInstance().setWidth(330),
-                                    fit: BoxFit.fitWidth,
-                                    height:
-                                        ScreenUtil.getInstance().setWidth(220)),
-                                margin: EdgeInsets.only(
-                                    right:
-                                        ScreenUtil.getInstance().setWidth(30)),
-                              )
-                            : new Container(),
-                        new Expanded(
-                          child: new Text(
-                            article.title,
-                            maxLines: 2,
-                            softWrap: false,
-                            //是否自动换行 false文字不考虑容器大小  单行显示   超出；屏幕部分将默认截断处理
-                            overflow: TextOverflow.ellipsis,
-                            style: new TextStyle(
-                                fontSize: ScreenUtil.getInstance().setSp(40),
-                                color: Color(0xFF333333)),
-                          ),
-                        ),
-                      ],
-                    ),
-                    new Divider(
-                      height: ScreenUtil.getInstance().setWidth(30),
-                      color: Colors.transparent,
-                    ),
-                    new Row(
-                      children: <Widget>[
-                        new Text(
-                          article.superChapterName,
-                          style: new TextStyle(
-                              fontSize: ScreenUtil.getInstance().setSp(32),
-                              color: const Color(0xFF999999)),
-                        ),
-                        new Text(" • ",
+                    article.type == 1
+                        ? new Text(
+                            "置顶•",
                             style: new TextStyle(
                                 fontSize: ScreenUtil.getInstance().setSp(32),
-                                color: const Color(0xFF999999))),
-                        new Expanded(
-                          child: new Text(article.chapterName,
-                              style: new TextStyle(
-                                  fontSize: ScreenUtil.getInstance().setSp(32),
-                                  color: const Color(0xFF999999))),
-                        ),
-                        new GestureDetector(
-                          onTap: () => {
-                            HttpRequest.getInstance().post(
-                                article.collect == false
-                                    ? "${Api.COLLECT}${article.id}/json"
-                                    : "${Api.UN_COLLECT_ORIGIN_ID}${article.id}/json",
-                                successCallBack: (data) {
-                              setState(() {
-                                article.collect = !article.collect;
-                              });
-                            }, errorCallBack: (code, msg) {}, context: context)
-                          },
-                          child: new Image(
-                            image: article.collect == false
-                                ? AssetImage(R.assetsImgZan0)
-                                : AssetImage(R.assetsImgZan1),
-                            width: ScreenUtil.getInstance().setWidth(66),
-                            height: ScreenUtil.getInstance().setWidth(66),
-                          ),
-                        )
-                      ],
+                                color: const Color(0xFFf86734)),
+                          )
+                        : new Container(),
+                    article.fresh == true
+                        ? new Text(
+                            "新•",
+                            style: new TextStyle(
+                                fontSize: ScreenUtil.getInstance().setSp(32),
+                                color: const Color(0xFF4282f4)),
+                          )
+                        : new Container(),
+                    new Text(
+                      article.author,
+                      style: new TextStyle(
+                          fontSize: ScreenUtil.getInstance().setSp(32),
+                          color: const Color(0xFF6e6e6e)),
+                    ),
+                    new Expanded(
+                        child: article.tags.length == 0
+                            ? new Container()
+                            : new Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: getTags(article),
+                              )),
+                    new Text(
+                      article.niceDate,
+                      style: new TextStyle(
+                          fontSize: ScreenUtil.getInstance().setSp(32),
+                          color: const Color(0xFF999999)),
                     )
                   ],
                 ),
-              ),
-              //分割线
-              new Divider(height: 1)
-            ],
+                new Divider(
+                  height: ScreenUtil.getInstance().setWidth(30),
+                  color: Colors.transparent,
+                ),
+                new Row(
+                  children: <Widget>[
+                    article.envelopePic != ""
+                        ? new Container(
+                            child: new Image(
+                                image: NetworkImage(article.envelopePic),
+                                width: ScreenUtil.getInstance().setWidth(330),
+                                fit: BoxFit.fitWidth,
+                                height: ScreenUtil.getInstance().setWidth(220)),
+                            margin: EdgeInsets.only(
+                                right: ScreenUtil.getInstance().setWidth(30)),
+                          )
+                        : new Container(),
+                    new Expanded(
+                      child: new Text(
+                        article.title,
+                        maxLines: 2,
+                        softWrap: false,
+                        //是否自动换行 false文字不考虑容器大小  单行显示   超出；屏幕部分将默认截断处理
+                        overflow: TextOverflow.ellipsis,
+                        style: new TextStyle(
+                            fontSize: ScreenUtil.getInstance().setSp(40),
+                            color: Color(0xFF333333)),
+                      ),
+                    ),
+                  ],
+                ),
+                new Divider(
+                  height: ScreenUtil.getInstance().setWidth(30),
+                  color: Colors.transparent,
+                ),
+                new Row(
+                  children: <Widget>[
+                    new Text(
+                      article.superChapterName,
+                      style: new TextStyle(
+                          fontSize: ScreenUtil.getInstance().setSp(32),
+                          color: const Color(0xFF999999)),
+                    ),
+                    new Text(" • ",
+                        style: new TextStyle(
+                            fontSize: ScreenUtil.getInstance().setSp(32),
+                            color: const Color(0xFF999999))),
+                    new Expanded(
+                      child: new Text(article.chapterName,
+                          style: new TextStyle(
+                              fontSize: ScreenUtil.getInstance().setSp(32),
+                              color: const Color(0xFF999999))),
+                    ),
+                    new GestureDetector(
+                      onTap: () => {
+                        HttpRequest.getInstance().post(
+                            article.collect == false
+                                ? "${Api.COLLECT}${article.id}/json"
+                                : "${Api.UN_COLLECT_ORIGIN_ID}${article.id}/json",
+                            successCallBack: (data) {
+                          setState(() {
+                            article.collect = !article.collect;
+                          });
+                        }, errorCallBack: (code, msg) {}, context: context)
+                      },
+                      child: new Image(
+                        image: article.collect == false
+                            ? AssetImage(R.assetsImgZan0)
+                            : AssetImage(R.assetsImgZan1),
+                        width: ScreenUtil.getInstance().setWidth(66),
+                        height: ScreenUtil.getInstance().setWidth(66),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
-        ));
+          //分割线
+          new Divider(height: 1)
+        ],
+      ),
+    ));
   }
 
   @override

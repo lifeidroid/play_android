@@ -57,7 +57,7 @@ class SystemChildFragmentState extends State<SystemChildFragment>
         children.addAll(getChild(entity, i, entity.children[i]));
       }
     } else {
-      children.add(new GestureDetector(
+      children.add(new InkWell(
         onTap: () => {
           Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
             return new SystemDetailPage(pEntity, index);
@@ -65,10 +65,10 @@ class SystemChildFragmentState extends State<SystemChildFragment>
         },
         child: new Container(
             padding: EdgeInsets.fromLTRB(
-                ScreenUtil.getInstance().setWidth(42),
-                ScreenUtil.getInstance().setWidth(25),
-                ScreenUtil.getInstance().setWidth(42),
-                ScreenUtil.getInstance().setWidth(25)),
+                ScreenUtil.getInstance().setWidth(50),
+                ScreenUtil.getInstance().setWidth(20),
+                ScreenUtil.getInstance().setWidth(50),
+                ScreenUtil.getInstance().setWidth(20)),
             decoration: new BoxDecoration(
               border: new Border.all(color: Colors.transparent, width: 1),
               // 边色与边宽度
@@ -80,7 +80,7 @@ class SystemChildFragmentState extends State<SystemChildFragment>
               entity.name,
               textAlign: TextAlign.center,
               style: new TextStyle(
-                  fontSize: ScreenUtil.getInstance().setSp(40),
+                  fontSize: ScreenUtil.getInstance().setSp(36),
                   color: const Color(0xFF999999)),
             )),
       ));
@@ -98,25 +98,33 @@ class SystemChildFragmentState extends State<SystemChildFragment>
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(ScreenUtil.getInstance().setWidth(45)),
-      child: Wrap(
-        /**
-         * 这里区分一下主轴和纵轴的概念：
-         * 当水平方向的时候，其主轴就是水平，纵轴就是垂直。
-         * 当垂直方向的时候，其主轴就是垂直，纵轴就是水平。
-         */
-        direction: Axis.horizontal,
-        //不设置默认为horizontal
-        alignment: WrapAlignment.start,
-        //沿主轴方向居中
-        spacing: 10.0,
-        //主轴（水平）方向间距
-        runSpacing: 10.0,
-        //纵轴（垂直）方向间距
-        children: getChildren(),
-      ),
-    );
+    return
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        child:  SingleChildScrollView(
+          padding: EdgeInsets.all(ScreenUtil.getInstance().setWidth(45)),
+          child: Wrap(
+            /**
+             * 这里区分一下主轴和纵轴的概念：
+             * 当水平方向的时候，其主轴就是水平，纵轴就是垂直。
+             * 当垂直方向的时候，其主轴就是垂直，纵轴就是水平。
+             *
+             */
+            direction: Axis.horizontal,
+            //不设置默认为horizontal
+            alignment: WrapAlignment.start,
+            //沿主轴方向居中
+            spacing: 10.0,
+            //主轴（水平）方向间距
+            runSpacing: 10.0,
+            //纵轴（垂直）方向间距
+            children: getChildren(),
+          ),
+        ) ,
+      )
+    ;
   }
 
   @override

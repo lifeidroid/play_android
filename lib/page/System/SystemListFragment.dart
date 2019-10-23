@@ -99,7 +99,6 @@ class SystemListFragmentState extends State<SystemListFragment>
   renderRow(index, context) {
     var article = articleList[index];
     return new Container(
-        color: Colors.white,
         child: new InkWell(
           onTap: () {
             Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
