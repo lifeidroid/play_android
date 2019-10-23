@@ -28,6 +28,7 @@ Flutter版的玩安卓客户端，应用中可能还有功能不太完善的地�
 - [鼓起勇气，大胆尝试](https://www.androidcup.com/index.php/2019/10/16/%e7%ac%ac%e4%b8%89%e7%ab%a0%ef%bc%9a%e9%bc%93%e8%b5%b7%e5%8b%87%e6%b0%94%ef%bc%8c%e5%a4%a7%e8%83%86%e5%b0%9d%e8%af%95/)
 - [不破不立，永不放弃](https://www.androidcup.com/index.php/2019/10/17/%e3%80%90%e6%8a%80%e6%9c%af%e5%88%86%e4%ba%ab%e3%80%91%e7%ac%ac%e5%9b%9b%e7%ab%a0%ef%bc%9a%e4%b8%8d%e7%a0%b4%e4%b8%8d%e7%ab%8b%ef%bc%8c%e6%b0%b8%e4%b8%8d%e6%94%be%e5%bc%83/)
 - [小心翼翼，坑中有戏](https://www.androidcup.com/index.php/2019/10/18/%e3%80%90%e6%8a%80%e6%9c%af%e5%88%86%e4%ba%ab%e3%80%91%e7%ac%ac%e4%ba%94%e7%ab%a0%ef%bc%9a%e5%b0%8f%e5%bf%83%e7%bf%bc%e7%bf%bc%ef%bc%8c%e5%9d%91%e4%b8%ad%e6%9c%89%e6%88%8f/)
+- [点点滴滴，在于积累](https://www.androidcup.com/index.php/2019/10/23/%e3%80%90%e6%8a%80%e6%9c%af%e5%88%86%e4%ba%ab%e3%80%91%e7%ac%ac%e5%85%ad%e7%ab%a0%ef%bc%9a%e7%82%b9%e7%82%b9%e6%bb%b4%e6%bb%b4%ef%bc%8c%e5%9c%a8%e4%ba%8e%e7%a7%af%e7%b4%af/)
 - 待续...
 
 
