@@ -43,7 +43,6 @@ class ProjectListFragmentState extends State<ProjectListFragment>
         successCallBack: (data) {
       Map<String, dynamic> dataJson = json.decode(data);
       List responseJson = json.decode(json.encode(dataJson["datas"]));
-      print(responseJson.runtimeType);
       List<HomeArticleEntity> cardbeanList =
           responseJson.map((m) => new HomeArticleEntity.fromJson(m)).toList();
       setState(() {

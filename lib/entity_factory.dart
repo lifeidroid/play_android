@@ -3,6 +3,7 @@ import 'package:play_android/entity/coin_info_entity.dart';
 import 'package:play_android/entity/collect_entity.dart';
 import 'package:play_android/entity/gongzh_entity.dart';
 import 'package:play_android/entity/home_article_entity.dart';
+import 'package:play_android/entity/hot_key_entity.dart';
 import 'package:play_android/entity/login_entity.dart';
 import 'package:play_android/entity/project_entity.dart';
 import 'package:play_android/entity/system_entity.dart';
@@ -23,6 +24,8 @@ class EntityFactory {
       return GongzhEntity.fromJson(json) as T;
     } else if (T.toString() == "HomeArticleEntity") {
       return HomeArticleEntity.fromJson(json) as T;
+    } else if (T.toString() == "HotKeyEntity") {
+      return HotKeyEntity.fromJson(json) as T;
     } else if (T.toString() == "LoginEntity") {
       return LoginEntity.fromJson(json) as T;
     } else if (T.toString() == "ProjectEntity") {
