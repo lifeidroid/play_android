@@ -8,7 +8,7 @@ import 'package:play_android/Api.dart';
 import 'package:play_android/entity/banner_entity.dart';
 import 'package:play_android/entity/home_article_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
-import 'package:play_android/page/SearchPage.dart';
+import 'package:play_android/page/home/SearchPage.dart';
 import 'package:play_android/r.dart';
 
 import '../BrowserPage.dart';
@@ -103,16 +103,23 @@ class HomeFragmentState extends State<HomeFragment>
         backgroundColor: Color(0xff4282f4),
         centerTitle: true,
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            disabledColor: Colors.white,
-            onPressed: () {
+          new InkWell(
+            child: Padding(padding: EdgeInsets.all(ScreenUtil.getInstance().setWidth(55)),child: new Image(
+              image: AssetImage(R.assetsImgIcSearch),
+            ),),
+            onTap: () {
               Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
                 return SearchPage();
               }));
             },
           ),
         ],
+        leading: new InkWell(
+          child: Padding(padding: EdgeInsets.all(ScreenUtil.getInstance().setWidth(55)),child: new Image(
+            image: AssetImage(R.assetsImgIcArticle),
+          ),),
+          onTap: () {},
+        ),
       ),
       body: EasyRefresh(
         child: ListView.builder(

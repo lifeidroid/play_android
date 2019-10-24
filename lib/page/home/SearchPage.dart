@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:play_android/entity/home_article_entity.dart';
-import 'package:play_android/entity/home_article_entity.dart';
 import 'package:play_android/entity/hot_key_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 import 'package:play_android/widget/T.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Api.dart';
-import '../Config.dart';
-import '../r.dart';
-import 'BrowserPage.dart';
+import '../../Api.dart';
+import '../../Config.dart';
+import '../../r.dart';
+import '../BrowserPage.dart';
 
 ///搜索页面
 class SearchPage extends StatefulWidget {
@@ -317,8 +316,6 @@ class SearchPageState extends State<SearchPage> {
                 itemBuilder: (context, index) {
                   return renderRow(index, context);
                 }),
-//      header: MaterialHeader(),
-//      footer: MaterialFooter(),
             onRefresh: () async {
               articleList.clear();
               currentPage = 0;

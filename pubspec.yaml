@@ -26,7 +26,7 @@ dependencies:
   dio: ^3.0.2 #网络请求框架
   cupertino_icons: ^0.1.2
   flutter_easyrefresh: ^2.0.4 #下拉刷新
-  webview_flutter: ^0.3.14  #WebView
+  webview_flutter: ^0.3.15+1  #WebView
   # https://github.com/flutterchina/cookie_jar
   cookie_jar: ^1.0.0
   dio_cookie_manager: ^1.0.0  #latest version
@@ -58,26 +58,49 @@ flutter:
     - assets/img/btn_tongyong_p.jpg
     - assets/img/ic_about.png
     - assets/img/ic_account_normal.png
+    - assets/img/ic_add.png
+    - assets/img/ic_article.png
     - assets/img/ic_back.png
+    - assets/img/ic_back_b.png
     - assets/img/ic_book_normal.png
     - assets/img/ic_book_selected.png
+    - assets/img/ic_bottom_bar_home.png
+    - assets/img/ic_bottom_bar_mine.png
+    - assets/img/ic_bottom_bar_navi.png
+    - assets/img/ic_bottom_bar_project.png
+    - assets/img/ic_bottom_bar_wechat.png
+    - assets/img/ic_browser.png
+    - assets/img/ic_browser_b.png
     - assets/img/ic_check_box_checked.png
     - assets/img/ic_check_box_unchecked.png
     - assets/img/ic_close.png
+    - assets/img/ic_close_b.png
     - assets/img/ic_coin.png
     - assets/img/ic_collect.png
+    - assets/img/ic_collect_b.png
+    - assets/img/ic_copy_link.png
+    - assets/img/ic_copy_link_b.png
     - assets/img/ic_delete.png
     - assets/img/ic_empty.png
     - assets/img/ic_error.png
+    - assets/img/ic_exit.png
+    - assets/img/ic_exit_b.png
     - assets/img/ic_eye_normal.png
     - assets/img/ic_favorite.png
     - assets/img/ic_github.png
     - assets/img/ic_heart.png
+    - assets/img/ic_home.png
+    - assets/img/ic_home_b.png
+    - assets/img/ic_home_g.png
     - assets/img/ic_home_normal.png
     - assets/img/ic_home_selected.png
+    - assets/img/ic_http_interrupt.png
+    - assets/img/ic_http_interrupt_b.png
     - assets/img/ic_jianshu.png
     - assets/img/ic_launcher_foreground.png
     - assets/img/ic_launcher_round.png
+    - assets/img/ic_menu.png
+    - assets/img/ic_menu_b.png
     - assets/img/ic_mine_normal.png
     - assets/img/ic_mine_selected.png
     - assets/img/ic_more.png
@@ -92,9 +115,19 @@ flutter:
     - assets/img/ic_rank_2.png
     - assets/img/ic_rank_3.png
     - assets/img/ic_read_later.png
+    - assets/img/ic_read_later_b.png
+    - assets/img/ic_refresh.png
+    - assets/img/ic_refresh_b.png
+    - assets/img/ic_remove.png
+    - assets/img/ic_right_b.png
+    - assets/img/ic_right_g.png
     - assets/img/ic_rule.png
     - assets/img/ic_search.png
     - assets/img/ic_setting.png
+    - assets/img/ic_share.png
+    - assets/img/ic_share_b.png
+    - assets/img/ic_swipe_back.png
+    - assets/img/ic_swipe_back_b.png
     - assets/img/ic_wechat_normal.png
     - assets/img/ic_wechat_selected.png
     - assets/img/image_holder.png
