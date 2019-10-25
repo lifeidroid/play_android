@@ -20,6 +20,9 @@ Flutter版的玩安卓客户端，应用中可能还有功能不太完善的地�
   dio_cookie_manager: ^1.0.0  #网络Cookie管理  
   shared_preferences: ^0.5.3+4 #本地配置文件存储   
   event_bus: ^1.1.0 #Flutter版的EventBus
+  url_launcher: ^3.0.3  #打开浏览器  
+  image_picker: ^0.6.1+8  #选择图片  
+  image_cropper: ^1.1.0    #图片剪切  
   ...
   
   ## Flutter从零学习轨迹
