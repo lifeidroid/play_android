@@ -13,9 +13,7 @@ import 'my/MyFragment.dart';
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new ApplicationPage(),
-    );
+    return new ApplicationPage();
   }
 }
 

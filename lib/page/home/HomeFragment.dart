@@ -104,9 +104,12 @@ class HomeFragmentState extends State<HomeFragment>
         centerTitle: true,
         actions: <Widget>[
           new InkWell(
-            child: Padding(padding: EdgeInsets.all(ScreenUtil.getInstance().setWidth(55)),child: new Image(
-              image: AssetImage(R.assetsImgIcSearch),
-            ),),
+            child: Padding(
+              padding: EdgeInsets.all(ScreenUtil.getInstance().setWidth(55)),
+              child: new Image(
+                image: AssetImage(R.assetsImgIcSearch),
+              ),
+            ),
             onTap: () {
               Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
                 return SearchPage();
@@ -115,9 +118,12 @@ class HomeFragmentState extends State<HomeFragment>
           ),
         ],
         leading: new InkWell(
-          child: Padding(padding: EdgeInsets.all(ScreenUtil.getInstance().setWidth(55)),child: new Image(
-            image: AssetImage(R.assetsImgIcArticle),
-          ),),
+          child: Padding(
+            padding: EdgeInsets.all(ScreenUtil.getInstance().setWidth(55)),
+            child: new Image(
+              image: AssetImage(R.assetsImgIcArticle),
+            ),
+          ),
           onTap: () {},
         ),
       ),
@@ -146,9 +152,9 @@ class HomeFragmentState extends State<HomeFragment>
                         Navigator.of(context)
                             .push(new MaterialPageRoute(builder: (_) {
                           return new Browser(
-                            url: articleList[index].link,
-                            title: articleList[index].title,
-                          );
+                              url: articleList[index].link,
+                              title: articleList[index].title,
+                              id: articleList[index].id);
                         }))
                       },
                     ));
@@ -202,6 +208,7 @@ class HomeFragmentState extends State<HomeFragment>
           return new Browser(
             url: article.link,
             title: article.title,
+            id: article.id,
           );
         }));
       },

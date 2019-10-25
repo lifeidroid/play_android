@@ -85,6 +85,7 @@ class CollectedPageState extends State<CollectedPage> {
               return new Browser(
                 url: article.link,
                 title: article.title,
+                id: article.id,
               );
             }));
           },

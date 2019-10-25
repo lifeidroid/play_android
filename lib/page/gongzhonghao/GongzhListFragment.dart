@@ -83,6 +83,7 @@ class GongzhListFragmentState extends State<GongzhListFragment>
               return new Browser(
                 url: article.link,
                 title: article.title,
+                id: article.id,
               );
             }))
           },

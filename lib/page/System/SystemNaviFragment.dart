@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:play_android/entity/system_entity.dart';
 import 'package:play_android/entity/system_navi_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 
@@ -56,6 +55,7 @@ class SystemNaviFragmentState extends State<SystemNaviFragment>
               return new Browser(
                 url: dataList[i].articles[j].link,
                 title: dataList[i].articles[j].title,
+                id: dataList[i].articles[j].id,
               );
             }))
           },
@@ -109,6 +109,5 @@ class SystemNaviFragmentState extends State<SystemNaviFragment>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

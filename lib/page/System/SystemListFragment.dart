@@ -105,6 +105,7 @@ class SystemListFragmentState extends State<SystemListFragment>
               return new Browser(
                 url: article.link,
                 title: article.title,
+                id: article.id,
               );
             }));
           },
