@@ -57,9 +57,11 @@ flutter:
   assets:
     # assets-generator-begin
     # assets/img/*
+    - assets/img/author.jpg
     - assets/img/btn_tongyong_n.jpg
     - assets/img/btn_tongyong_p.jpg
     - assets/img/ic_about.png
+    - assets/img/ic_about_w.png
     - assets/img/ic_account_normal.png
     - assets/img/ic_add.png
     - assets/img/ic_article.png

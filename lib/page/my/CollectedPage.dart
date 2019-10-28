@@ -47,6 +47,7 @@ class CollectedPageState extends State<CollectedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xff4282f4),
         title: Text(
           "我的收藏",
           style: TextStyle(fontSize: ScreenUtil.getInstance().setSp(45)),

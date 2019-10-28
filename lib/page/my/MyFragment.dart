@@ -13,12 +13,14 @@ import 'package:play_android/entity/login_entity.dart';
 import 'package:play_android/event/LoginEvent.dart';
 import 'package:play_android/http/HttpRequest.dart';
 import 'package:play_android/page/login/LoginPage.dart';
+import 'package:play_android/page/my/AboutAuthorPage.dart';
 import 'package:play_android/page/my/CollectedPage.dart';
 import 'package:play_android/r.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Api.dart';
 import '../../main.dart';
+import '../BrowserPage.dart';
 
 class MyFragment extends StatefulWidget {
   @override
@@ -192,7 +194,7 @@ class MyFragmentState extends State<MyFragment>
                 mainAxisAlignment: MainAxisAlignment.end,
               ),
             ),
-            height: ScreenUtil.getInstance().setWidth(700),
+            height: ScreenUtil.getInstance().setWidth(800),
             width: ScreenUtil.getInstance().setWidth(1080),
 //          color: Color(0xFF4282f4),
           ),
@@ -286,73 +288,92 @@ class MyFragmentState extends State<MyFragment>
                       ],
                     ),
                   ),
-                  new Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      new Padding(
-                        padding: EdgeInsets.only(
-                            left: ScreenUtil.getInstance().setWidth(45),
-                            top: ScreenUtil.getInstance().setWidth(45),
-                            bottom: ScreenUtil.getInstance().setWidth(45),
-                            right: ScreenUtil.getInstance().setWidth(35)),
-                        child: new Image(
-                          image: AssetImage(R.assetsImgImgBook),
-                          width: ScreenUtil.getInstance().setWidth(60),
-                          height: ScreenUtil.getInstance().setWidth(60),
+                  new InkWell(
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Padding(
+                          padding: EdgeInsets.only(
+                              left: ScreenUtil.getInstance().setWidth(45),
+                              top: ScreenUtil.getInstance().setWidth(45),
+                              bottom: ScreenUtil.getInstance().setWidth(45),
+                              right: ScreenUtil.getInstance().setWidth(35)),
+                          child: new Image(
+                            image: AssetImage(R.assetsImgImgGithub),
+                            width: ScreenUtil.getInstance().setWidth(60),
+                            height: ScreenUtil.getInstance().setWidth(60),
+                          ),
                         ),
-                      ),
-                      new Expanded(
-                          child: new Text(
-                        "稍后阅读",
-                        style: TextStyle(
-                            fontSize: ScreenUtil.getInstance().setSp(40),
-                            color: Colors.black54),
-                      )),
-                      new Padding(
-                        padding: EdgeInsets.only(
-                            right: ScreenUtil.getInstance().setWidth(45)),
-                        child: IconButton(
-                            icon: Image(
-                          image: AssetImage(R.assetsImgImgRight),
-                          width: ScreenUtil.getInstance().setWidth(55),
-                          height: ScreenUtil.getInstance().setWidth(55),
+                        new Expanded(
+                            child: new Text(
+                          "项目地址",
+                          style: TextStyle(
+                              fontSize: ScreenUtil.getInstance().setSp(40),
+                              color: Colors.black54),
                         )),
-                      )
-                    ],
+                        new Padding(
+                          padding: EdgeInsets.only(
+                              right: ScreenUtil.getInstance().setWidth(45)),
+                          child: IconButton(
+                              icon: Image(
+                            image: AssetImage(R.assetsImgImgRight),
+                            width: ScreenUtil.getInstance().setWidth(55),
+                            height: ScreenUtil.getInstance().setWidth(55),
+                          )),
+                        )
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(new MaterialPageRoute(builder: (_) {
+                        return new Browser(
+                          url: "https://github.com/lifeidroid/play_android",
+                          title: "仿玩Android客户端Flutter版",
+                          id: 9705,
+                        );
+                      }));
+                    },
                   ),
-                  new Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      new Padding(
-                        padding: EdgeInsets.only(
-                            left: ScreenUtil.getInstance().setWidth(45),
-                            top: ScreenUtil.getInstance().setWidth(45),
-                            bottom: ScreenUtil.getInstance().setWidth(45),
-                            right: ScreenUtil.getInstance().setWidth(35)),
-                        child: new Image(
-                          image: AssetImage(R.assetsImgImgGithub),
-                          width: ScreenUtil.getInstance().setWidth(60),
-                          height: ScreenUtil.getInstance().setWidth(60),
+                  new InkWell(
+                    child: new Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        new Padding(
+                          padding: EdgeInsets.only(
+                              left: ScreenUtil.getInstance().setWidth(45),
+                              top: ScreenUtil.getInstance().setWidth(45),
+                              bottom: ScreenUtil.getInstance().setWidth(45),
+                              right: ScreenUtil.getInstance().setWidth(35)),
+                          child: new Image(
+                            image: AssetImage(R.assetsImgIcAbout),
+                            width: ScreenUtil.getInstance().setWidth(60),
+                            height: ScreenUtil.getInstance().setWidth(60),
+                          ),
                         ),
-                      ),
-                      new Expanded(
-                          child: new Text(
-                        "开源项目",
-                        style: TextStyle(
-                            fontSize: ScreenUtil.getInstance().setSp(40),
-                            color: Colors.black54),
-                      )),
-                      new Padding(
-                        padding: EdgeInsets.only(
-                            right: ScreenUtil.getInstance().setWidth(45)),
-                        child: IconButton(
-                            icon: Image(
-                          image: AssetImage(R.assetsImgImgRight),
-                          width: ScreenUtil.getInstance().setWidth(55),
-                          height: ScreenUtil.getInstance().setWidth(55),
+                        new Expanded(
+                            child: new Text(
+                          "关于作者",
+                          style: TextStyle(
+                              fontSize: ScreenUtil.getInstance().setSp(40),
+                              color: Colors.black54),
                         )),
-                      )
-                    ],
+                        new Padding(
+                          padding: EdgeInsets.only(
+                              right: ScreenUtil.getInstance().setWidth(45)),
+                          child: IconButton(
+                              icon: Image(
+                            image: AssetImage(R.assetsImgImgRight),
+                            width: ScreenUtil.getInstance().setWidth(55),
+                            height: ScreenUtil.getInstance().setWidth(55),
+                          )),
+                        )
+                      ],
+                    ),
+                    onTap: (){
+                      Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
+                        return new AboutAuthorPage();
+                      }));
+                    },
                   ),
                   new Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
