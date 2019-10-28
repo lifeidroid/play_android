@@ -21,7 +21,6 @@ class AboutAuthorPageState extends State<AboutAuthorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: new Container(
-        padding: EdgeInsets.only(top: ScreenUtil.getInstance().setWidth(130)),
         height: ScreenUtil.getInstance().height,
         decoration: new BoxDecoration(
           image: new DecorationImage(
@@ -33,39 +32,31 @@ class AboutAuthorPageState extends State<AboutAuthorPage> {
           filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
           child: new Column(
             children: <Widget>[
-              Container(
-                height: ScreenUtil.getInstance().setWidth(175),
-                alignment: Alignment.topLeft,
-                child: Row(
-                  children: <Widget>[
-                    new InkWell(
-                      child: Padding(
-                        padding: EdgeInsets.all(
-                            ScreenUtil.getInstance().setWidth(55)),
-                        child: new Image(
-                          image: AssetImage(R.assetsImgIcClose),
-                        ),
-                      ),
-                      onTap: (){
-                        Navigator.pop(context);
-                      },
+              AppBar(
+                leading: new InkWell(
+                  child: Padding(
+                    padding:
+                        EdgeInsets.all(ScreenUtil.getInstance().setWidth(55)),
+                    child: new Image(
+                      image: AssetImage(R.assetsImgIcClose),
                     ),
-                    Expanded(
-                      child: Text(
-                        "关于作者",
-                        textAlign: TextAlign.center, //文本对齐方式  居中
-                        style: TextStyle(
-                            fontSize: ScreenUtil.getInstance().setSp(50),
-                            color: Colors.white),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.all(ScreenUtil.getInstance().setWidth(55)),
-                      child: new Text("    "),
-                    ),
-                  ],
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                 ),
+                backgroundColor: Colors.transparent,
+                elevation: 0,//去掉阴影效果
+                title: Text(
+                  "关于作者",
+                  textAlign: TextAlign.center, //文本对齐方式  居中
+                  style: TextStyle(
+                      fontSize: ScreenUtil.getInstance().setSp(50),
+                      color: Colors.white),
+                ),
+              ),
+              Container(
+                height: ScreenUtil.getInstance().setWidth(100),
               ),
               new ClipOval(
                 child: new Image(

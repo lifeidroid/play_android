@@ -61,4 +61,6 @@ class Api {
   //获取个人积分，需要登录后访问
   static const String COIN_USERINFO = "lg/coin/userinfo/json";
 
+  //积分排行榜接口
+  static const String COIN_RANK = "coin/rank/";
 }

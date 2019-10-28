@@ -6,6 +6,7 @@ import 'package:play_android/entity/home_article_entity.dart';
 import 'package:play_android/entity/hot_key_entity.dart';
 import 'package:play_android/entity/login_entity.dart';
 import 'package:play_android/entity/project_entity.dart';
+import 'package:play_android/entity/rank_entity.dart';
 import 'package:play_android/entity/system_entity.dart';
 import 'package:play_android/entity/system_navi_entity.dart';
 import 'package:play_android/http/return_body_entity.dart';
@@ -30,6 +31,8 @@ class EntityFactory {
       return LoginEntity.fromJson(json) as T;
     } else if (T.toString() == "ProjectEntity") {
       return ProjectEntity.fromJson(json) as T;
+    } else if (T.toString() == "RankEntity") {
+      return RankEntity.fromJson(json) as T;
     } else if (T.toString() == "SystemEntity") {
       return SystemEntity.fromJson(json) as T;
     } else if (T.toString() == "SystemNaviEntity") {

@@ -15,6 +15,7 @@ import 'package:play_android/http/HttpRequest.dart';
 import 'package:play_android/page/login/LoginPage.dart';
 import 'package:play_android/page/my/AboutAuthorPage.dart';
 import 'package:play_android/page/my/CollectedPage.dart';
+import 'package:play_android/page/my/RankPage.dart';
 import 'package:play_android/r.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -115,6 +116,30 @@ class MyFragmentState extends State<MyFragment>
               filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
               child: new Column(
                 children: <Widget>[
+                  AppBar(
+                    actions: <Widget>[
+                      new InkWell(
+                        child: Padding(
+                          padding: EdgeInsets.all(
+                              ScreenUtil.getInstance().setWidth(55)),
+                          child: new Image(
+                            image: AssetImage(R.assetsImgIcRank),
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.of(context)
+                              .push(new MaterialPageRoute(builder: (_) {
+                            return new RankPage();
+                          }));
+                        },
+                      )
+                    ],
+                    backgroundColor: Colors.transparent,
+                    elevation: 0, //去掉阴影效果
+                  ),
+                  Container(
+                    height: ScreenUtil.getInstance().setWidth(50),
+                  ),
                   new GestureDetector(
                     child: new ClipOval(
                       child: new Image(
@@ -191,12 +216,8 @@ class MyFragmentState extends State<MyFragment>
                     height: ScreenUtil.getInstance().setWidth(50),
                   ),
                 ],
-                mainAxisAlignment: MainAxisAlignment.end,
               ),
             ),
-            height: ScreenUtil.getInstance().setWidth(800),
-            width: ScreenUtil.getInstance().setWidth(1080),
-//          color: Color(0xFF4282f4),
           ),
           Container(
               decoration: BoxDecoration(
@@ -369,8 +390,9 @@ class MyFragmentState extends State<MyFragment>
                         )
                       ],
                     ),
-                    onTap: (){
-                      Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(new MaterialPageRoute(builder: (_) {
                         return new AboutAuthorPage();
                       }));
                     },
