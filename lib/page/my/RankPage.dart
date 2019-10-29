@@ -70,12 +70,12 @@ class RankPageState extends State<RankPage> {
   //列表的item
   renderRow(index, context) {
     var rankItem = rankList[index];
-    double progress = 1.0*rankItem.coinCount/rankList[0].coinCount;
+    double progress = 1.0 * rankItem.coinCount / rankList[0].coinCount;
     print("进度：${rankList[0].coinCount}");
     return new Container(
-        child: new Stack(
-      children: <Widget>[
-        Container(
+      height: ScreenUtil.getInstance().setWidth(185),
+      child: Stack(children: <Widget>[
+        new Container(
           height: ScreenUtil.getInstance().setWidth(185),
           child: LinearProgressIndicator(
             value: progress,
@@ -83,12 +83,20 @@ class RankPageState extends State<RankPage> {
             backgroundColor: Colors.white,
           ),
         ),
-        Row(
-          children: <Widget>[
-
-          ],
-        )
-      ],
-    ));
+        new Container(
+            height: ScreenUtil.getInstance().setWidth(185),
+            padding: EdgeInsets.only(right: ScreenUtil.getInstance().setWidth(45),left: ScreenUtil.getInstance().setWidth(45)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text("${rankItem.rank}"),
+                Expanded(
+                  child: Text("   ${rankItem.username}"),
+                ),
+                Text("${rankItem.coinCount}",style: TextStyle(color: Color(0xff4282f4)),),
+              ],
+            )),
+      ]),
+    );
   }
 }

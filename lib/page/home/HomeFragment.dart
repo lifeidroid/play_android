@@ -27,7 +27,7 @@ class HomeFragment extends StatefulWidget {
 class HomeFragmentState extends State<HomeFragment>
     with AutomaticKeepAliveClientMixin {
   List<HomeArticleEntity> articleList = new List();
-  int currentPage = 0; //第一页
+  int currentPage = 1; //第一页
   SwiperController _swiperController;
   List<BannerEntity> bannerList = [];
 
@@ -166,7 +166,7 @@ class HomeFragmentState extends State<HomeFragment>
 //      footer: MaterialFooter(),
         onRefresh: () async {
           articleList.clear();
-          currentPage = 0;
+          currentPage = 1;
           loadTopData();
         },
         onLoad: () async {
