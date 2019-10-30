@@ -25,7 +25,7 @@ class SystemListFragment extends StatefulWidget {
 class SystemListFragmentState extends State<SystemListFragment>
     with AutomaticKeepAliveClientMixin {
   int _Id;
-  int currentPage = 1; //第一页
+  int currentPage = 0; //第一页
   List<HomeArticleEntity> articleList = new List();
 
   SystemListFragmentState(this._Id);
@@ -64,7 +64,7 @@ class SystemListFragmentState extends State<SystemListFragment>
 //      footer: MaterialFooter(),
       onRefresh: () async {
         articleList.clear();
-        currentPage = 1;
+        currentPage = 0;
         loadArticleData();
       },
       onLoad: () async {

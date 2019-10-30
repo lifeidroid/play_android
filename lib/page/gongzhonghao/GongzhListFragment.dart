@@ -25,7 +25,7 @@ class GongzhListFragment extends StatefulWidget {
 class GongzhListFragmentState extends State<GongzhListFragment>
     with AutomaticKeepAliveClientMixin {
   int _Id;
-  int currentPage = 1; //第一页
+  int currentPage = 0; //第一页
   List<HomeArticleEntity> articleList = new List();
 
   GongzhListFragmentState(this._Id);
@@ -63,7 +63,7 @@ class GongzhListFragmentState extends State<GongzhListFragment>
 //      footer: MaterialFooter(),
       onRefresh: () async {
         articleList.clear();
-        currentPage = 1;
+        currentPage = 0;
         loadArticleData();
       },
       onLoad: () async {

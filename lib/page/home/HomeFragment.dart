@@ -9,6 +9,7 @@ import 'package:play_android/entity/banner_entity.dart';
 import 'package:play_android/entity/home_article_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
 import 'package:play_android/page/home/SearchPage.dart';
+import 'package:play_android/page/home/SquarePage.dart';
 import 'package:play_android/r.dart';
 
 import '../BrowserPage.dart';
@@ -27,7 +28,7 @@ class HomeFragment extends StatefulWidget {
 class HomeFragmentState extends State<HomeFragment>
     with AutomaticKeepAliveClientMixin {
   List<HomeArticleEntity> articleList = new List();
-  int currentPage = 1; //第一页
+  int currentPage = 0; //第一页
   SwiperController _swiperController;
   List<BannerEntity> bannerList = [];
 
@@ -124,7 +125,11 @@ class HomeFragmentState extends State<HomeFragment>
               image: AssetImage(R.assetsImgIcArticle),
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(new MaterialPageRoute(builder: (_) {
+              return SquarePage();
+            }));
+          },
         ),
       ),
       body: EasyRefresh(
@@ -166,7 +171,7 @@ class HomeFragmentState extends State<HomeFragment>
 //      footer: MaterialFooter(),
         onRefresh: () async {
           articleList.clear();
-          currentPage = 1;
+          currentPage = 0;
           loadTopData();
         },
         onLoad: () async {

@@ -35,7 +35,7 @@ class SearchPageState extends State<SearchPage> {
   String searchKey = null;
 
   //当前页码
-  int currentPage = 1; //第一页
+  int currentPage = 0; //第一页
 
   //搜索结果
   List<HomeArticleEntity> articleList = new List();
@@ -193,7 +193,7 @@ class SearchPageState extends State<SearchPage> {
   }
 
   void searchClick() {
-    currentPage = 1;
+    currentPage = 0;
     isSearch = true;
     addSearchHistory(searchKey);
     articleList.clear();
@@ -318,7 +318,7 @@ class SearchPageState extends State<SearchPage> {
                 }),
             onRefresh: () async {
               articleList.clear();
-              currentPage = 1;
+              currentPage = 0;
               doSearch();
             },
             onLoad: () async {

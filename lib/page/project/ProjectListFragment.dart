@@ -25,7 +25,7 @@ class ProjectListFragment extends StatefulWidget {
 class ProjectListFragmentState extends State<ProjectListFragment>
     with AutomaticKeepAliveClientMixin {
   int _Id;
-  int currentPage = 1; //第一页
+  int currentPage = 0; //第一页
   List<HomeArticleEntity> articleList = new List();
 
   ProjectListFragmentState(this._Id);
@@ -63,7 +63,7 @@ class ProjectListFragmentState extends State<ProjectListFragment>
 //      footer: MaterialFooter(),
       onRefresh: () async {
         articleList.clear();
-        currentPage = 1;
+        currentPage = 0;
         loadArticleData();
       },
       onLoad: () async {

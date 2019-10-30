@@ -6,6 +6,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:play_android/entity/rank_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
+import 'package:play_android/r.dart';
 
 import '../../Api.dart';
 
@@ -19,7 +20,7 @@ class RankPage extends StatefulWidget {
 
 class RankPageState extends State<RankPage> {
   List<RankEntity> rankList = [];
-  int currentPage = 1;
+  int currentPage = 0;
 
   //  加载文章
   loadArticleData() async {
@@ -56,7 +57,7 @@ class RankPageState extends State<RankPage> {
             }),
         onRefresh: () async {
           rankList.clear();
-          currentPage = 1;
+          currentPage = 0;
           loadArticleData();
         },
         onLoad: () async {
@@ -71,7 +72,6 @@ class RankPageState extends State<RankPage> {
   renderRow(index, context) {
     var rankItem = rankList[index];
     double progress = 1.0 * rankItem.coinCount / rankList[0].coinCount;
-    print("进度：${rankList[0].coinCount}");
     return new Container(
       height: ScreenUtil.getInstance().setWidth(185),
       child: Stack(children: <Widget>[
@@ -85,15 +85,20 @@ class RankPageState extends State<RankPage> {
         ),
         new Container(
             height: ScreenUtil.getInstance().setWidth(185),
-            padding: EdgeInsets.only(right: ScreenUtil.getInstance().setWidth(45),left: ScreenUtil.getInstance().setWidth(45)),
+            padding: EdgeInsets.only(
+                right: ScreenUtil.getInstance().setWidth(45),
+                left: ScreenUtil.getInstance().setWidth(45)),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text("${rankItem.rank}"),
+                Text("${index + 1}"),
                 Expanded(
                   child: Text("   ${rankItem.username}"),
                 ),
-                Text("${rankItem.coinCount}",style: TextStyle(color: Color(0xff4282f4)),),
+                Text(
+                  "${rankItem.coinCount}",
+                  style: TextStyle(color: Color(0xff4282f4)),
+                ),
               ],
             )),
       ]),

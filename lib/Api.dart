@@ -63,4 +63,7 @@ class Api {
 
   //积分排行榜接口
   static const String COIN_RANK = "coin/rank/";
+
+  //广场列表数据
+  static const String USER_ARTICLE_LIST = "user_article/list/";
 }

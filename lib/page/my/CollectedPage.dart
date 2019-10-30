@@ -20,7 +20,7 @@ class CollectedPage extends StatefulWidget {
 }
 
 class CollectedPageState extends State<CollectedPage> {
-  int currentPage = 1; //第一页
+  int currentPage = 0; //第一页
   List<CollectEntity> articleList = new List();
 
   @override
@@ -64,7 +64,7 @@ class CollectedPageState extends State<CollectedPage> {
 //      footer: MaterialFooter(),
         onRefresh: () async {
           articleList.clear();
-          currentPage = 1;
+          currentPage = 0;
           loadArticleData();
         },
         onLoad: () async {
