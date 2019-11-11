@@ -1,3 +1,4 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,13 +11,18 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage(R.assetsImgLoginBg),
-          fit: BoxFit.cover,
-        )),
-        child: new Column(
+    return new Stack(
+      children: <Widget>[
+        Container(
+//          decoration: BoxDecoration(
+//              color:Color(0xff4282f4)),
+          child:FlareActor(
+            "assets/flrs/loginbg.flr",
+            animation: "wave",
+            fit: BoxFit.fill,
+          ),
+        ),
+        new Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             new Container(
@@ -84,6 +90,7 @@ class LoginPage extends StatelessWidget {
             )
           ],
         ),
+      ],
     );
   }
 }
