@@ -6,6 +6,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:play_android/entity/home_article_entity.dart';
 import 'package:play_android/http/HttpRequest.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../Api.dart';
 import '../../r.dart';
@@ -53,7 +54,8 @@ class ProjectListFragmentState extends State<ProjectListFragment>
 
   @override
   Widget build(BuildContext context) {
-    return EasyRefresh(
+    return articleList.length == 0?  showLoadding() :
+      EasyRefresh(
       child: ListView.builder(
           itemCount: articleList.length,
           itemBuilder: (context, index) {
@@ -70,6 +72,87 @@ class ProjectListFragmentState extends State<ProjectListFragment>
         currentPage++;
         loadArticleData();
       },
+    );
+  }
+
+  Widget showLoadding(){
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300],
+      highlightColor: Colors.grey[100],
+      child: Column(
+        children: [0, 1, 2, 3, 4, 5, 6]
+            .map((_) => new Column(
+          children: <Widget>[
+            new Container(
+              margin: EdgeInsets.all(ScreenUtil.getInstance().setWidth(45)),
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Row(
+                    children: <Widget>[
+                      Container(
+                        width: ScreenUtil.getInstance().setWidth(180),
+                        height: ScreenUtil.getInstance().setWidth(45),
+                        color: Colors.white,
+                      ),
+                      new Expanded(
+                          child: Container()
+                      ),
+                      Container(
+                        width: ScreenUtil.getInstance().setWidth(170),
+                        height: ScreenUtil.getInstance().setWidth(45),
+                        color: Colors.white,
+                      )
+                    ],
+                  ),
+                  new Divider(
+                    height: ScreenUtil.getInstance().setWidth(30),
+                    color: Colors.transparent,
+                  ),
+                  new Row(
+                    children: <Widget>[
+                      Container(
+                        width:  ScreenUtil.getInstance().setWidth(330),
+                        height: ScreenUtil.getInstance().setWidth(220),
+                        color: Colors.white,
+                        margin: EdgeInsets.only(right: ScreenUtil.getInstance().setWidth(30)),
+                      ),
+                      new Expanded(
+                        child: new Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              height: ScreenUtil.getInstance().setWidth(47),
+                              color: Colors.white,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: ScreenUtil.getInstance().setWidth(15)),
+                              height: ScreenUtil.getInstance().setWidth(150),
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  new Divider(
+                    height: ScreenUtil.getInstance().setWidth(30),
+                    color: Colors.transparent,
+                  ),
+                  Container(
+                    width:  ScreenUtil.getInstance().setWidth(300),
+                    height: ScreenUtil.getInstance().setWidth(45),
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+            //分割线
+            new Divider(height: 1)
+          ],
+        ))
+            .toList(),
+      ),
     );
   }
 
