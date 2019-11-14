@@ -5,7 +5,7 @@ Flutter版的玩安卓客户端，应用中可能还有功能不太完善的地�
 ## 效果展示
 |  |  |  |
 | ----- | ---- | ---- |
-| ![微信图片_20191011163208.jpg](http://ww1.sinaimg.cn/large/a78780c0ly1g7udptgrwfj20u01rcduh.jpg) | ![微信图片_20191011163203.jpg](http://ww1.sinaimg.cn/large/a78780c0ly1g7udravu2ij20u01rctg7.jpg) | ![微信图片_20191011163158.jpg](http://ww1.sinaimg.cn/large/a78780c0ly1g7udu95nqdj20u01rcthc.jpg) |
+| ![device-2019-11-14-144616.png](http://ww1.sinaimg.cn/mw690/a78780c0ly1g8xkgflpcsj20u01rc48d.jpg) | ![微信图片_20191011163203.jpg](http://ww1.sinaimg.cn/large/a78780c0ly1g7udravu2ij20u01rctg7.jpg) | ![微信图片_20191011163158.jpg](http://ww1.sinaimg.cn/large/a78780c0ly1g7udu95nqdj20u01rcthc.jpg) |
 | ![微信图片_20191011163152.jpg](http://ww1.sinaimg.cn/large/a78780c0ly1g7uduhewx9j20u01rc7iw.jpg) | ![微信图片_20191015133249.jpg](http://ww1.sinaimg.cn/large/a78780c0ly1g7yu293s4sj20u01rcjvg.jpg) | ![device-2019-11-14-144344.png](http://ww1.sinaimg.cn/large/a78780c0ly1g8xkdyoln9j20u01rcgxl.jpg) |
 
 ## 项目中用到的插件
